@@ -8,23 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
-@class SPGripViewBorderView;
-
 @protocol ZDStickerViewDelegate;
 
-@interface ZDStickerView : UIView {
-    SPGripViewBorderView *borderView;
-}
+@interface ZDStickerView : UIView
 
 @property (assign, nonatomic) UIView *contentView;
+@property (nonatomic) BOOL preventsLayoutWhileResizing;
+@property (nonatomic) BOOL preventsPositionOutsideSuperview;
 @property (nonatomic, assign) id <ZDStickerViewDelegate> delegate;
 
-- (void)hideEditingHandles;
-- (void)showEditingHandles;
+//- (void)hideEditingHandles;
+//- (void)showEditingHandles;
 
 @end
 
-@protocol SPUserResizableViewDelegate <NSObject>
+@protocol ZDStickerViewDelegate <NSObject>
 @optional
 @end
 

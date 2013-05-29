@@ -19,7 +19,6 @@
 		7C5C39DE1755B15100803C08 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C39DC1755B15100803C08 /* MainStoryboard.storyboard */; };
 		7C5C39E11755B15100803C08 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5C39E01755B15100803C08 /* ViewController.m */; };
 		7C5C39EB1755B4FC00803C08 /* ZDStickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5C39EA1755B4FC00803C08 /* ZDStickerView.m */; };
-		7C5C39EE1755B76500803C08 /* SPGripViewBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5C39ED1755B76500803C08 /* SPGripViewBorderView.m */; };
 		7C5C39F01755BCBA00803C08 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5C39EF1755BCBA00803C08 /* QuartzCore.framework */; };
 		7C5C39F51755C0FC00803C08 /* RotationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C39F11755C0FC00803C08 /* RotationButton.png */; };
 		7C5C39F61755C0FC00803C08 /* moveButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C39F21755C0FC00803C08 /* moveButton.png */; };
@@ -46,8 +45,6 @@
 		7C5C39E01755B15100803C08 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		7C5C39E91755B4FC00803C08 /* ZDStickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZDStickerView.h; sourceTree = "<group>"; };
 		7C5C39EA1755B4FC00803C08 /* ZDStickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZDStickerView.m; sourceTree = "<group>"; };
-		7C5C39EC1755B76500803C08 /* SPGripViewBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPGripViewBorderView.h; sourceTree = "<group>"; };
-		7C5C39ED1755B76500803C08 /* SPGripViewBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPGripViewBorderView.m; sourceTree = "<group>"; };
 		7C5C39EF1755BCBA00803C08 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7C5C39F11755C0FC00803C08 /* RotationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RotationButton.png; sourceTree = "<group>"; };
 		7C5C39F21755C0FC00803C08 /* moveButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moveButton.png; sourceTree = "<group>"; };
@@ -135,8 +132,6 @@
 				7C5C39F31755C0FC00803C08 /* deleteButton.png */,
 				7C5C39E91755B4FC00803C08 /* ZDStickerView.h */,
 				7C5C39EA1755B4FC00803C08 /* ZDStickerView.m */,
-				7C5C39EC1755B76500803C08 /* SPGripViewBorderView.h */,
-				7C5C39ED1755B76500803C08 /* SPGripViewBorderView.m */,
 			);
 			name = ZDStickerView;
 			path = ../ZDStickerView;
@@ -216,7 +211,6 @@
 				7C5C39D51755B15100803C08 /* AppDelegate.m in Sources */,
 				7C5C39E11755B15100803C08 /* ViewController.m in Sources */,
 				7C5C39EB1755B4FC00803C08 /* ZDStickerView.m in Sources */,
-				7C5C39EE1755B76500803C08 /* SPGripViewBorderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
