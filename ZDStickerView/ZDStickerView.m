@@ -46,14 +46,9 @@ static SPUserResizableViewAnchorPoint SPUserResizableViewLowerMiddleAnchorPoint 
 @implementation ZDStickerView
 @synthesize contentView, delegate, touchStart,anchorPoint;
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
+@synthesize prevPoint; //resizing
+@synthesize deltaAngle, startTransform; //rotation
+@synthesize resizingControl, rotationControl, deleteControl;
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -64,13 +59,170 @@ static SPUserResizableViewAnchorPoint SPUserResizableViewLowerMiddleAnchorPoint 
 }
 */
 
+-(void)singleTap:(UIPanGestureRecognizer *)recognizer
+{
+    UIView * close = (UIView *)[recognizer view];
+    [close.superview removeFromSuperview];
+}
+
+-(void)resizeTranslate:(UIPanGestureRecognizer *)recognizer
+{
+    if ([recognizer state]== UIGestureRecognizerStateBegan)
+    {
+        prevPoint = [recognizer locationInView:self.superview];
+        [self setNeedsDisplay];
+        
+        
+    }
+    else if ([recognizer state] == UIGestureRecognizerStateChanged)
+    {
+        if (self.bounds.size.width < 20)
+        {
+            
+            self.bounds = CGRectMake(self.bounds.origin.x,
+                                     self.bounds.origin.y,
+                                     20,
+                                     self.bounds.size.height);
+            contentView.frame = CGRectMake(12, 12,
+                                     self.bounds.size.width-24, self.bounds.size.height-27);
+            resizingControl.frame =CGRectMake(self.bounds.size.width-25,
+                                       self.bounds.size.height-25, 25, 25);
+            rotationControl.frame = CGRectMake(0, self.bounds.size.height-25,
+                                        25, 25);
+            deleteControl.frame = CGRectMake(0, 0, 25, 25);
+            
+            
+            
+            
+        }
+        
+        if(self.bounds.size.height < 20)
+        {
+            self.bounds = CGRectMake(self.bounds.origin.x,
+                                     self.bounds.origin.y,
+                                     self.bounds.size.width, 20);
+            contentView.frame = CGRectMake(12, 12, self.bounds.size.width-24,
+                                           self.bounds.size.height-27);
+            resizingControl.frame =CGRectMake(self.bounds.size.width-25,
+                                              self.bounds.size.height-25,
+                                              25, 25);
+            rotationControl.frame = CGRectMake(0, self.bounds.size.height-25, 25, 25);
+            deleteControl.frame = CGRectMake(0, 0, 25, 25);
+        }
+        
+        CGPoint point = [recognizer locationInView:self.superview];
+        float wChange = 0.0, hChange = 0.0;
+        
+        wChange = (point.x - prevPoint.x); //Slow down increment
+        hChange = (point.y - prevPoint.y); //Slow down increment
+        
+        
+        self.bounds = CGRectMake(self.bounds.origin.x, self.bounds.origin.y,
+                                 self.bounds.size.width + (wChange),
+                                 self.bounds.size.height + (hChange));
+        contentView.frame = CGRectMake(12, 12,
+                                 self.bounds.size.width-24, self.bounds.size.height-27);
+        resizingControl.frame =CGRectMake(self.bounds.size.width-25,
+                                   self.bounds.size.height-25, 25, 25);
+        rotationControl.frame = CGRectMake(0, self.bounds.size.height-25, 25, 25);
+        deleteControl.frame = CGRectMake(0, 0, 25, 25);
+        
+        prevPoint = [recognizer locationInView:self.superview];
+        
+        [self setNeedsDisplay];
+    }
+    else if ([recognizer state] == UIGestureRecognizerStateEnded)
+    {
+        prevPoint = [recognizer locationInView:self.superview];
+        [self setNeedsDisplay];
+    }
+}
+
+-(void)rotateViewPanGesture:(UIPanGestureRecognizer *)recognizer
+{
+    if ([recognizer state] == UIGestureRecognizerStateBegan)
+    {
+        deltaAngle = atan2([recognizer locationInView:self].y-self.center.y,
+                           [recognizer locationInView:self].x-self.center.x);
+        startTransform = self.transform;
+    }
+    else if ([recognizer state] == UIGestureRecognizerStateChanged)
+    {
+        float ang = atan2([recognizer locationInView:self.superview].y - self.center.y,
+                          [recognizer locationInView:self.superview].x - self.center.x);
+        float angleDiff = deltaAngle - ang;
+        self.transform = CGAffineTransformMakeRotation(-angleDiff);
+        [self setNeedsDisplay];
+    }
+    else if ([recognizer state] == UIGestureRecognizerStateEnded)
+    {
+        deltaAngle = atan2([recognizer locationInView:self].y-self.center.y,
+                           [recognizer locationInView:self].x-self.center.x);
+        startTransform = self.transform;
+        [self setNeedsDisplay];
+    }
+}
+
+
 - (void)setupDefaultAttributes {
     borderView = [[SPGripViewBorderView alloc] initWithFrame:CGRectInset(self.bounds, kSPUserResizableViewGlobalInset, kSPUserResizableViewGlobalInset)];
     [borderView setHidden:YES];
-    [self addSubview:borderView];
+    //[self addSubview:borderView];
     self.minWidth = kSPUserResizableViewDefaultMinWidth;
     self.minHeight = kSPUserResizableViewDefaultMinHeight;
     self.preventsPositionOutsideSuperview = YES;
+    
+    
+    
+    deleteControl = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
+    deleteControl.backgroundColor = [UIColor clearColor];
+    deleteControl.image = [UIImage imageNamed:@"close_gold.png" ];
+    deleteControl.userInteractionEnabled = YES;
+    UITapGestureRecognizer * singleTap = [[UITapGestureRecognizer alloc]
+                                          initWithTarget:self
+                                          action:@selector(singleTap:)];
+    [deleteControl addGestureRecognizer:singleTap];
+    [self addSubview:deleteControl];
+    
+    resizingControl = [[UIImageView alloc]initWithFrame:CGRectMake(self.frame.size.width-25,
+                                                                   self.frame.size.height-25,
+                                                                   25, 25)];
+    resizingControl.backgroundColor = [UIColor clearColor];
+    resizingControl.userInteractionEnabled = YES;
+    resizingControl.image = [UIImage imageNamed:@"button_02.png" ];
+    UIPanGestureRecognizer* panResizeGesture = [[UIPanGestureRecognizer alloc]
+                                                initWithTarget:self
+                                                action:@selector(resizeTranslate:)];
+    [resizingControl addGestureRecognizer:panResizeGesture];
+    [self addSubview:resizingControl];
+    
+    //Rotating view which is in bottom left corner
+    rotationControl = [[UIImageView alloc]initWithFrame:CGRectMake(0,
+                                                                   self.frame.size.height-25,
+                                                                   25, 25)];
+    rotationControl.backgroundColor = [UIColor clearColor];
+    rotationControl.image = [UIImage imageNamed:@"button_01.png" ];
+    rotationControl.userInteractionEnabled = YES;
+    UIPanGestureRecognizer * panRotateGesture = [[UIPanGestureRecognizer alloc]
+                                                 initWithTarget:self
+                                                 action:@selector(rotateViewPanGesture:)];
+    [rotationControl addGestureRecognizer:panRotateGesture];
+    [panRotateGesture requireGestureRecognizerToFail:panResizeGesture];
+    [self addSubview:rotationControl];
+}
+
+- (id)initWithFrame:(CGRect)frame {
+    if ((self = [super initWithFrame:frame])) {
+        [self setupDefaultAttributes];
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if ((self = [super initWithCoder:aDecoder])) {
+        [self setupDefaultAttributes];
+    }
+    return self;
 }
 
 - (void)setContentView:(UIView *)newContentView {
@@ -81,7 +233,7 @@ static SPUserResizableViewAnchorPoint SPUserResizableViewLowerMiddleAnchorPoint 
     
     // Ensure the border view is always on top by removing it and adding it to the end of the subview list.
     [borderView removeFromSuperview];
-    [self addSubview:borderView];
+    //[self addSubview:borderView];
 }
 
 - (void)setFrame:(CGRect)newFrame {
