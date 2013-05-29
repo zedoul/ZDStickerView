@@ -29,6 +29,7 @@
     userResizableView.backgroundColor = [UIColor yellowColor];
     userResizableView.preventsPositionOutsideSuperview = YES;
     userResizableView.preventsLayoutWhileResizing = YES;
+    [userResizableView showEditingHandles];
     [self.view addSubview:userResizableView];
 }
 

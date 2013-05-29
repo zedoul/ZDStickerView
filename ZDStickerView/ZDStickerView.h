@@ -8,21 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol ZDStickerViewDelegate;
-
 @interface ZDStickerView : UIView
 
 @property (assign, nonatomic) UIView *contentView;
 @property (nonatomic) BOOL preventsLayoutWhileResizing;
 @property (nonatomic) BOOL preventsPositionOutsideSuperview;
-@property (nonatomic, assign) id <ZDStickerViewDelegate> delegate;
+@property (nonatomic) CGFloat minWidth;
+@property (nonatomic) CGFloat minHeight;
 
-//- (void)hideEditingHandles;
-//- (void)showEditingHandles;
+- (void)hideEditingHandles;
+- (void)showEditingHandles;
 
-@end
-
-@protocol ZDStickerViewDelegate <NSObject>
-@optional
 @end
 
