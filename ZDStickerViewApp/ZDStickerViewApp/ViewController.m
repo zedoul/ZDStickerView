@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "ZDStickerView.h"
 
 @interface ViewController ()
 
@@ -17,7 +18,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    
+	// Do any additional setup after loading the view.
+    UIImageView *imageView = [[UIImageView alloc]
+                              initWithImage:[UIImage imageNamed:@"sampleImage.png"]];
+    
+    CGRect gripFrame = CGRectMake(50, 50, 200, 150);
+    ZDStickerView *userResizableView = [[ZDStickerView alloc] initWithFrame:gripFrame];
+    userResizableView.contentView = imageView;
+    userResizableView.backgroundColor = [UIColor yellowColor];
+    [self.view addSubview:userResizableView];
 }
 
 - (void)didReceiveMemoryWarning

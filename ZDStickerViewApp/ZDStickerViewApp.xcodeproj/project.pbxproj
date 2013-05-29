@@ -18,6 +18,13 @@
 		7C5C39DB1755B15100803C08 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C39DA1755B15100803C08 /* Default-568h@2x.png */; };
 		7C5C39DE1755B15100803C08 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C39DC1755B15100803C08 /* MainStoryboard.storyboard */; };
 		7C5C39E11755B15100803C08 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5C39E01755B15100803C08 /* ViewController.m */; };
+		7C5C39EB1755B4FC00803C08 /* ZDStickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5C39EA1755B4FC00803C08 /* ZDStickerView.m */; };
+		7C5C39EE1755B76500803C08 /* SPGripViewBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5C39ED1755B76500803C08 /* SPGripViewBorderView.m */; };
+		7C5C39F01755BCBA00803C08 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5C39EF1755BCBA00803C08 /* QuartzCore.framework */; };
+		7C5C39F51755C0FC00803C08 /* RotationButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C39F11755C0FC00803C08 /* RotationButton.png */; };
+		7C5C39F61755C0FC00803C08 /* moveButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C39F21755C0FC00803C08 /* moveButton.png */; };
+		7C5C39F71755C0FC00803C08 /* deleteButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C39F31755C0FC00803C08 /* deleteButton.png */; };
+		7C5C39FA1755C1D400803C08 /* sampleImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C39F91755C1D400803C08 /* sampleImage.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +44,15 @@
 		7C5C39DD1755B15100803C08 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		7C5C39DF1755B15100803C08 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		7C5C39E01755B15100803C08 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		7C5C39E91755B4FC00803C08 /* ZDStickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZDStickerView.h; sourceTree = "<group>"; };
+		7C5C39EA1755B4FC00803C08 /* ZDStickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZDStickerView.m; sourceTree = "<group>"; };
+		7C5C39EC1755B76500803C08 /* SPGripViewBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPGripViewBorderView.h; sourceTree = "<group>"; };
+		7C5C39ED1755B76500803C08 /* SPGripViewBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPGripViewBorderView.m; sourceTree = "<group>"; };
+		7C5C39EF1755BCBA00803C08 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		7C5C39F11755C0FC00803C08 /* RotationButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RotationButton.png; sourceTree = "<group>"; };
+		7C5C39F21755C0FC00803C08 /* moveButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moveButton.png; sourceTree = "<group>"; };
+		7C5C39F31755C0FC00803C08 /* deleteButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deleteButton.png; sourceTree = "<group>"; };
+		7C5C39F91755C1D400803C08 /* sampleImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sampleImage.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C5C39F01755BCBA00803C08 /* QuartzCore.framework in Frameworks */,
 				7C5C39C51755B15100803C08 /* UIKit.framework in Frameworks */,
 				7C5C39C71755B15100803C08 /* Foundation.framework in Frameworks */,
 				7C5C39C91755B15100803C08 /* CoreGraphics.framework in Frameworks */,
@@ -74,6 +91,7 @@
 		7C5C39C31755B15100803C08 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7C5C39EF1755BCBA00803C08 /* QuartzCore.framework */,
 				7C5C39C41755B15100803C08 /* UIKit.framework */,
 				7C5C39C61755B15100803C08 /* Foundation.framework */,
 				7C5C39C81755B15100803C08 /* CoreGraphics.framework */,
@@ -84,6 +102,7 @@
 		7C5C39CA1755B15100803C08 /* ZDStickerViewApp */ = {
 			isa = PBXGroup;
 			children = (
+				7C5C39F91755C1D400803C08 /* sampleImage.png */,
 				7C5C39D31755B15100803C08 /* AppDelegate.h */,
 				7C5C39D41755B15100803C08 /* AppDelegate.m */,
 				7C5C39DC1755B15100803C08 /* MainStoryboard.storyboard */,
@@ -111,6 +130,13 @@
 		7C5C39E71755B1A100803C08 /* ZDStickerView */ = {
 			isa = PBXGroup;
 			children = (
+				7C5C39F11755C0FC00803C08 /* RotationButton.png */,
+				7C5C39F21755C0FC00803C08 /* moveButton.png */,
+				7C5C39F31755C0FC00803C08 /* deleteButton.png */,
+				7C5C39E91755B4FC00803C08 /* ZDStickerView.h */,
+				7C5C39EA1755B4FC00803C08 /* ZDStickerView.m */,
+				7C5C39EC1755B76500803C08 /* SPGripViewBorderView.h */,
+				7C5C39ED1755B76500803C08 /* SPGripViewBorderView.m */,
 			);
 			name = ZDStickerView;
 			path = ../ZDStickerView;
@@ -172,6 +198,10 @@
 				7C5C39D91755B15100803C08 /* Default@2x.png in Resources */,
 				7C5C39DB1755B15100803C08 /* Default-568h@2x.png in Resources */,
 				7C5C39DE1755B15100803C08 /* MainStoryboard.storyboard in Resources */,
+				7C5C39F51755C0FC00803C08 /* RotationButton.png in Resources */,
+				7C5C39F61755C0FC00803C08 /* moveButton.png in Resources */,
+				7C5C39F71755C0FC00803C08 /* deleteButton.png in Resources */,
+				7C5C39FA1755C1D400803C08 /* sampleImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,6 +215,8 @@
 				7C5C39D11755B15100803C08 /* main.m in Sources */,
 				7C5C39D51755B15100803C08 /* AppDelegate.m in Sources */,
 				7C5C39E11755B15100803C08 /* ViewController.m in Sources */,
+				7C5C39EB1755B4FC00803C08 /* ZDStickerView.m in Sources */,
+				7C5C39EE1755B76500803C08 /* SPGripViewBorderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
