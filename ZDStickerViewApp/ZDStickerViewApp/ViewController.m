@@ -26,7 +26,7 @@
     CGRect gripFrame = CGRectMake(50, 50, 200, 150);
     ZDStickerView *userResizableView = [[ZDStickerView alloc] initWithFrame:gripFrame];
     userResizableView.contentView = imageView;
-    userResizableView.backgroundColor = [UIColor yellowColor];
+//    userResizableView.backgroundColor = [UIColor yellowColor];
     userResizableView.preventsPositionOutsideSuperview = YES;
     userResizableView.preventsLayoutWhileResizing = YES;
     [userResizableView showEditingHandles];

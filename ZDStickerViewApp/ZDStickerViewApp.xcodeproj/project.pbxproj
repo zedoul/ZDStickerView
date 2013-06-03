@@ -23,6 +23,7 @@
 		7C5C39F61755C0FC00803C08 /* ZDBtn2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C39F21755C0FC00803C08 /* ZDBtn2.png */; };
 		7C5C39F71755C0FC00803C08 /* ZDBtn3.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C39F31755C0FC00803C08 /* ZDBtn3.png */; };
 		7C5C39FA1755C1D400803C08 /* sampleImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C39F91755C1D400803C08 /* sampleImage.png */; };
+		7CA7D584175C3DEB00C70BE6 /* SPGripViewBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CA7D583175C3DEB00C70BE6 /* SPGripViewBorderView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,8 @@
 		7C5C39F21755C0FC00803C08 /* ZDBtn2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ZDBtn2.png; sourceTree = "<group>"; };
 		7C5C39F31755C0FC00803C08 /* ZDBtn3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ZDBtn3.png; sourceTree = "<group>"; };
 		7C5C39F91755C1D400803C08 /* sampleImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sampleImage.png; sourceTree = SOURCE_ROOT; };
+		7CA7D582175C3DEB00C70BE6 /* SPGripViewBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPGripViewBorderView.h; sourceTree = "<group>"; };
+		7CA7D583175C3DEB00C70BE6 /* SPGripViewBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPGripViewBorderView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +132,8 @@
 				7C5C39F31755C0FC00803C08 /* ZDBtn3.png */,
 				7C5C39E91755B4FC00803C08 /* ZDStickerView.h */,
 				7C5C39EA1755B4FC00803C08 /* ZDStickerView.m */,
+				7CA7D582175C3DEB00C70BE6 /* SPGripViewBorderView.h */,
+				7CA7D583175C3DEB00C70BE6 /* SPGripViewBorderView.m */,
 			);
 			name = ZDStickerView;
 			path = ../ZDStickerView;
@@ -207,6 +212,7 @@
 				7C5C39D51755B15100803C08 /* AppDelegate.m in Sources */,
 				7C5C39E11755B15100803C08 /* ViewController.m in Sources */,
 				7C5C39EB1755B4FC00803C08 /* ZDStickerView.m in Sources */,
+				7CA7D584175C3DEB00C70BE6 /* SPGripViewBorderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

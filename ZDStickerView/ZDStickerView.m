@@ -117,6 +117,9 @@
         float angleDiff = deltaAngle - ang;
         self.transform = CGAffineTransformMakeRotation(-angleDiff);
         
+        borderView.frame = CGRectInset(self.bounds, kSPUserResizableViewGlobalInset, kSPUserResizableViewGlobalInset);
+        [borderView setNeedsDisplay];
+        
         [self setNeedsDisplay];
     }
     else if ([recognizer state] == UIGestureRecognizerStateEnded)
@@ -127,6 +130,10 @@
 }
 
 - (void)setupDefaultAttributes {
+    borderView = [[SPGripViewBorderView alloc] initWithFrame:CGRectInset(self.bounds, kSPUserResizableViewGlobalInset, kSPUserResizableViewGlobalInset)];
+    [borderView setHidden:YES];
+    [self addSubview:borderView];
+    
     if (kSPUserResizableViewDefaultMinWidth > self.bounds.size.width*0.5) {
         self.minWidth = kSPUserResizableViewDefaultMinWidth;
         self.minHeight = self.bounds.size.height * (kSPUserResizableViewDefaultMinWidth/self.bounds.size.width);
@@ -181,11 +188,18 @@
     contentView = newContentView;
     contentView.frame = CGRectInset(self.bounds, kSPUserResizableViewGlobalInset + kSPUserResizableViewInteractiveBorderSize/2, kSPUserResizableViewGlobalInset + kSPUserResizableViewInteractiveBorderSize/2);
     [self addSubview:contentView];
+    
+    [self bringSubviewToFront:borderView];
+    [self bringSubviewToFront:resizingControl];
+    [self bringSubviewToFront:deleteControl];
 }
 
 - (void)setFrame:(CGRect)newFrame {
     [super setFrame:newFrame];
     contentView.frame = CGRectInset(self.bounds, kSPUserResizableViewGlobalInset + kSPUserResizableViewInteractiveBorderSize/2, kSPUserResizableViewGlobalInset + kSPUserResizableViewInteractiveBorderSize/2);
+    
+    borderView.frame = CGRectInset(self.bounds, kSPUserResizableViewGlobalInset, kSPUserResizableViewGlobalInset);
+    [borderView setNeedsDisplay];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -234,12 +248,14 @@
 {
     resizingControl.hidden = YES;
     deleteControl.hidden = YES;
+    [borderView setHidden:YES];
 }
 
 - (void)showEditingHandles
 {
     resizingControl.hidden = NO;
     deleteControl.hidden = NO;
+    [borderView setHidden:NO];
 }
 
 @end
