@@ -7,11 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SPGripViewBorderView.h"
 
 @interface ZDStickerView : UIView
+{
+    SPGripViewBorderView *borderView;
+}
 
 @property (assign, nonatomic) UIView *contentView;
-@property (nonatomic) BOOL preventsLayoutWhileResizing;
 @property (nonatomic) BOOL preventsPositionOutsideSuperview;
 @property (nonatomic) CGFloat minWidth;
 @property (nonatomic) CGFloat minHeight;

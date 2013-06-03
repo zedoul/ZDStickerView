@@ -16,8 +16,9 @@
 @interface ZDStickerView ()
 
 @property (strong, nonatomic) UIImageView *resizingControl;
-@property (strong, nonatomic) UIImageView *rotationControl;
 @property (strong, nonatomic) UIImageView *deleteControl;
+
+@property (nonatomic) BOOL preventsLayoutWhileResizing;
 
 @property (nonatomic) float deltaAngle;
 @property (nonatomic) CGPoint prevPoint;
@@ -30,9 +31,9 @@
 @implementation ZDStickerView
 @synthesize contentView, touchStart;
 
-@synthesize prevPoint,preventsLayoutWhileResizing; //resizing
+@synthesize prevPoint;
 @synthesize deltaAngle, startTransform; //rotation
-@synthesize resizingControl, rotationControl, deleteControl;
+@synthesize resizingControl, deleteControl;
 @synthesize preventsPositionOutsideSuperview;
 @synthesize minWidth, minHeight;
 
@@ -70,90 +71,71 @@
                                      self.bounds.size.width-24, self.bounds.size.height-27);
             resizingControl.frame =CGRectMake(self.bounds.size.width-25,
                                        self.bounds.size.height-25, 25, 25);
-            rotationControl.frame = CGRectMake(0, self.bounds.size.height-25,
-                                        25, 25);
             deleteControl.frame = CGRectMake(0, 0, 25, 25);
             prevPoint = [recognizer locationInView:self];
-            return;
-        }
-        
-        CGPoint point = [recognizer locationInView:self];
-        float wChange = 0.0, hChange = 0.0;
-        
-        wChange = (point.x - prevPoint.x);
-        hChange = (point.y - prevPoint.y);
-        
-        if (ABS(wChange) > 20.0f || ABS(hChange) > 20.0f) {
+        } else {
+            CGPoint point = [recognizer locationInView:self];
+            float wChange = 0.0, hChange = 0.0;
+            
+            wChange = (point.x - prevPoint.x);
+            hChange = (point.y - prevPoint.y);
+            
+            if (ABS(wChange) > 20.0f || ABS(hChange) > 20.0f) {
+                prevPoint = [recognizer locationInView:self];
+                return;
+            }
+            
+            if (YES == self.preventsLayoutWhileResizing) {
+                if (wChange < 0.0f && hChange < 0.0f) {
+                    float change = MIN(wChange, hChange);
+                    wChange = change;
+                    hChange = change;
+                }
+                if (wChange < 0.0f) {
+                    hChange = wChange;
+                } else if (hChange < 0.0f) {
+                    wChange = hChange;
+                } else {
+                    float change = MAX(wChange, hChange);
+                    wChange = change;
+                    hChange = change;
+                }
+            }
+            
+            self.bounds = CGRectMake(self.bounds.origin.x, self.bounds.origin.y,
+                                     self.bounds.size.width + (wChange),
+                                     self.bounds.size.height + (hChange));
+            contentView.frame = CGRectMake(12, 12,
+                                           self.bounds.size.width-24, self.bounds.size.height-27);
+            resizingControl.frame =CGRectMake(self.bounds.size.width-25,
+                                              self.bounds.size.height-25, 25, 25);
+            deleteControl.frame = CGRectMake(0, 0, 25, 25);
             prevPoint = [recognizer locationInView:self];
-            return;
         }
         
-        if (YES == preventsLayoutWhileResizing) {
-            if (wChange < 0.0f && hChange < 0.0f) {
-                float change = MIN(wChange, hChange);
-                wChange = change;
-                hChange = change;
-            }
-            if (wChange < 0.0f) {
-                hChange = wChange;
-            } else if (hChange < 0.0f) {
-                wChange = hChange;
-            } else {
-                float change = MAX(wChange, hChange);
-                wChange = change;
-                hChange = change;
-            }
-        }
-        
-        self.bounds = CGRectMake(self.bounds.origin.x, self.bounds.origin.y,
-                                 self.bounds.size.width + (wChange),
-                                 self.bounds.size.height + (hChange));
-        
-        contentView.frame = CGRectMake(12, 12,
-                                 self.bounds.size.width-24, self.bounds.size.height-27);
-        resizingControl.frame =CGRectMake(self.bounds.size.width-25,
-                                   self.bounds.size.height-25, 25, 25);
-        rotationControl.frame = CGRectMake(0, self.bounds.size.height-25, 25, 25);
-        deleteControl.frame = CGRectMake(0, 0, 25, 25);
-        
-        prevPoint = [recognizer locationInView:self];
-        
-        [self setNeedsDisplay];
-    }
-    else if ([recognizer state] == UIGestureRecognizerStateEnded)
-    {
-        prevPoint = [recognizer locationInView:self];
-        [self setNeedsDisplay];
-    }
-}
-
--(void)rotateViewPanGesture:(UIPanGestureRecognizer *)recognizer
-{
-    if ([recognizer state] == UIGestureRecognizerStateBegan)
-    {
-        deltaAngle = atan2([recognizer locationInView:self].y-self.center.y,
-                           [recognizer locationInView:self].x-self.center.x);
-        startTransform = self.transform;
-    }
-    else if ([recognizer state] == UIGestureRecognizerStateChanged)
-    {
+        /* Rotation */
         float ang = atan2([recognizer locationInView:self.superview].y - self.center.y,
                           [recognizer locationInView:self.superview].x - self.center.x);
         float angleDiff = deltaAngle - ang;
         self.transform = CGAffineTransformMakeRotation(-angleDiff);
+        
+        borderView.frame = CGRectInset(self.bounds, kSPUserResizableViewGlobalInset, kSPUserResizableViewGlobalInset);
+        [borderView setNeedsDisplay];
+        
         [self setNeedsDisplay];
     }
     else if ([recognizer state] == UIGestureRecognizerStateEnded)
     {
-        deltaAngle = atan2([recognizer locationInView:self].y-self.center.y,
-                           [recognizer locationInView:self].x-self.center.x);
-        startTransform = self.transform;
+        prevPoint = [recognizer locationInView:self];
         [self setNeedsDisplay];
     }
 }
 
-
 - (void)setupDefaultAttributes {
+    borderView = [[SPGripViewBorderView alloc] initWithFrame:CGRectInset(self.bounds, kSPUserResizableViewGlobalInset, kSPUserResizableViewGlobalInset)];
+    [borderView setHidden:YES];
+    [self addSubview:borderView];
+    
     if (kSPUserResizableViewDefaultMinWidth > self.bounds.size.width*0.5) {
         self.minWidth = kSPUserResizableViewDefaultMinWidth;
         self.minHeight = self.bounds.size.height * (kSPUserResizableViewDefaultMinWidth/self.bounds.size.width);
@@ -162,11 +144,11 @@
         self.minHeight = self.bounds.size.height*0.5;
     }
     self.preventsPositionOutsideSuperview = YES;
-    self.preventsLayoutWhileResizing = NO;
+    self.preventsLayoutWhileResizing = YES;
     
     deleteControl = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
     deleteControl.backgroundColor = [UIColor clearColor];
-    deleteControl.image = [UIImage imageNamed:@"close_gold.png" ];
+    deleteControl.image = [UIImage imageNamed:@"ZDBtn3.png" ];
     deleteControl.userInteractionEnabled = YES;
     UITapGestureRecognizer * singleTap = [[UITapGestureRecognizer alloc]
                                           initWithTarget:self
@@ -179,26 +161,14 @@
                                                                    25, 25)];
     resizingControl.backgroundColor = [UIColor clearColor];
     resizingControl.userInteractionEnabled = YES;
-    resizingControl.image = [UIImage imageNamed:@"button_02.png" ];
+    resizingControl.image = [UIImage imageNamed:@"ZDBtn2.png.png" ];
     UIPanGestureRecognizer* panResizeGesture = [[UIPanGestureRecognizer alloc]
                                                 initWithTarget:self
                                                 action:@selector(resizeTranslate:)];
     [resizingControl addGestureRecognizer:panResizeGesture];
     [self addSubview:resizingControl];
-    
-    //Rotating view which is in bottom left corner
-    rotationControl = [[UIImageView alloc]initWithFrame:CGRectMake(0,
-                                                                   self.frame.size.height-25,
-                                                                   25, 25)];
-    rotationControl.backgroundColor = [UIColor clearColor];
-    rotationControl.image = [UIImage imageNamed:@"button_01.png" ];
-    rotationControl.userInteractionEnabled = YES;
-    UIPanGestureRecognizer * panRotateGesture = [[UIPanGestureRecognizer alloc]
-                                                 initWithTarget:self
-                                                 action:@selector(rotateViewPanGesture:)];
-    [rotationControl addGestureRecognizer:panRotateGesture];
-    [panRotateGesture requireGestureRecognizerToFail:panResizeGesture];
-    [self addSubview:rotationControl];
+    deltaAngle = atan2(self.frame.origin.y+self.frame.size.height - self.center.y,
+                       self.frame.origin.x+self.frame.size.width - self.center.x);
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -220,11 +190,18 @@
     contentView = newContentView;
     contentView.frame = CGRectInset(self.bounds, kSPUserResizableViewGlobalInset + kSPUserResizableViewInteractiveBorderSize/2, kSPUserResizableViewGlobalInset + kSPUserResizableViewInteractiveBorderSize/2);
     [self addSubview:contentView];
+    
+    [self bringSubviewToFront:borderView];
+    [self bringSubviewToFront:resizingControl];
+    [self bringSubviewToFront:deleteControl];
 }
 
 - (void)setFrame:(CGRect)newFrame {
     [super setFrame:newFrame];
     contentView.frame = CGRectInset(self.bounds, kSPUserResizableViewGlobalInset + kSPUserResizableViewInteractiveBorderSize/2, kSPUserResizableViewGlobalInset + kSPUserResizableViewInteractiveBorderSize/2);
+    
+    borderView.frame = CGRectInset(self.bounds, kSPUserResizableViewGlobalInset, kSPUserResizableViewGlobalInset);
+    [borderView setNeedsDisplay];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -243,7 +220,6 @@
 - (void)translateUsingTouchLocation:(CGPoint)touchPoint {
     CGPoint newCenter = CGPointMake(self.center.x + touchPoint.x - touchStart.x,
                                     self.center.y + touchPoint.y - touchStart.y);
-    
     if (self.preventsPositionOutsideSuperview) {
         // Ensure the translation won't cause the view to move offscreen.
         CGFloat midPointX = CGRectGetMidX(self.bounds);
@@ -273,15 +249,15 @@
 - (void)hideEditingHandles
 {
     resizingControl.hidden = YES;
-    rotationControl.hidden = YES;
     deleteControl.hidden = YES;
+    [borderView setHidden:YES];
 }
 
 - (void)showEditingHandles
 {
     resizingControl.hidden = NO;
-    rotationControl.hidden = NO;
     deleteControl.hidden = NO;
+    [borderView setHidden:NO];
 }
 
 @end
