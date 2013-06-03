@@ -20,7 +20,6 @@
 		7C5C39E11755B15100803C08 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5C39E01755B15100803C08 /* ViewController.m */; };
 		7C5C39EB1755B4FC00803C08 /* ZDStickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5C39EA1755B4FC00803C08 /* ZDStickerView.m */; };
 		7C5C39F01755BCBA00803C08 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5C39EF1755BCBA00803C08 /* QuartzCore.framework */; };
-		7C5C39F51755C0FC00803C08 /* ZDBtn1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C39F11755C0FC00803C08 /* ZDBtn1.png */; };
 		7C5C39F61755C0FC00803C08 /* ZDBtn2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C39F21755C0FC00803C08 /* ZDBtn2.png */; };
 		7C5C39F71755C0FC00803C08 /* ZDBtn3.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C39F31755C0FC00803C08 /* ZDBtn3.png */; };
 		7C5C39FA1755C1D400803C08 /* sampleImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C39F91755C1D400803C08 /* sampleImage.png */; };
@@ -46,7 +45,6 @@
 		7C5C39E91755B4FC00803C08 /* ZDStickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZDStickerView.h; sourceTree = "<group>"; };
 		7C5C39EA1755B4FC00803C08 /* ZDStickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZDStickerView.m; sourceTree = "<group>"; };
 		7C5C39EF1755BCBA00803C08 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		7C5C39F11755C0FC00803C08 /* ZDBtn1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ZDBtn1.png; sourceTree = "<group>"; };
 		7C5C39F21755C0FC00803C08 /* ZDBtn2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ZDBtn2.png; sourceTree = "<group>"; };
 		7C5C39F31755C0FC00803C08 /* ZDBtn3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ZDBtn3.png; sourceTree = "<group>"; };
 		7C5C39F91755C1D400803C08 /* sampleImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sampleImage.png; sourceTree = SOURCE_ROOT; };
@@ -127,7 +125,6 @@
 		7C5C39E71755B1A100803C08 /* ZDStickerView */ = {
 			isa = PBXGroup;
 			children = (
-				7C5C39F11755C0FC00803C08 /* ZDBtn1.png */,
 				7C5C39F21755C0FC00803C08 /* ZDBtn2.png */,
 				7C5C39F31755C0FC00803C08 /* ZDBtn3.png */,
 				7C5C39E91755B4FC00803C08 /* ZDStickerView.h */,
@@ -193,7 +190,6 @@
 				7C5C39D91755B15100803C08 /* Default@2x.png in Resources */,
 				7C5C39DB1755B15100803C08 /* Default-568h@2x.png in Resources */,
 				7C5C39DE1755B15100803C08 /* MainStoryboard.storyboard in Resources */,
-				7C5C39F51755C0FC00803C08 /* ZDBtn1.png in Resources */,
 				7C5C39F61755C0FC00803C08 /* ZDBtn2.png in Resources */,
 				7C5C39F71755C0FC00803C08 /* ZDBtn3.png in Resources */,
 				7C5C39FA1755C1D400803C08 /* sampleImage.png in Resources */,

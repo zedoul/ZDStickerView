@@ -9,9 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ZDStickerView : UIView
-{
-    //CGPoint originalCenter;
-}
 
 @property (assign, nonatomic) UIView *contentView;
 @property (nonatomic) BOOL preventsLayoutWhileResizing;
