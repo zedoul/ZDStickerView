@@ -71,66 +71,47 @@
                                        self.bounds.size.height-25, 25, 25);
             deleteControl.frame = CGRectMake(0, 0, 25, 25);
             prevPoint = [recognizer locationInView:self];
-            return;
-        }
-        
-        CGPoint point = [recognizer locationInView:self];
-        float wChange = 0.0, hChange = 0.0;
-        
-        wChange = (point.x - prevPoint.x);
-        hChange = (point.y - prevPoint.y);
-        
-        if (ABS(wChange) > 20.0f || ABS(hChange) > 20.0f) {
+        } else {
+            CGPoint point = [recognizer locationInView:self];
+            float wChange = 0.0, hChange = 0.0;
+            
+            wChange = (point.x - prevPoint.x);
+            hChange = (point.y - prevPoint.y);
+            
+            if (ABS(wChange) > 20.0f || ABS(hChange) > 20.0f) {
+                prevPoint = [recognizer locationInView:self];
+                return;
+            }
+            
+            if (YES == preventsLayoutWhileResizing) {
+                if (wChange < 0.0f && hChange < 0.0f) {
+                    float change = MIN(wChange, hChange);
+                    wChange = change;
+                    hChange = change;
+                }
+                if (wChange < 0.0f) {
+                    hChange = wChange;
+                } else if (hChange < 0.0f) {
+                    wChange = hChange;
+                } else {
+                    float change = MAX(wChange, hChange);
+                    wChange = change;
+                    hChange = change;
+                }
+            }
+            
+            self.bounds = CGRectMake(self.bounds.origin.x, self.bounds.origin.y,
+                                     self.bounds.size.width + (wChange),
+                                     self.bounds.size.height + (hChange));
+            contentView.frame = CGRectMake(12, 12,
+                                           self.bounds.size.width-24, self.bounds.size.height-27);
+            resizingControl.frame =CGRectMake(self.bounds.size.width-25,
+                                              self.bounds.size.height-25, 25, 25);
+            deleteControl.frame = CGRectMake(0, 0, 25, 25);
             prevPoint = [recognizer locationInView:self];
-            return;
         }
-        
-        if (YES == preventsLayoutWhileResizing) {
-            if (wChange < 0.0f && hChange < 0.0f) {
-                float change = MIN(wChange, hChange);
-                wChange = change;
-                hChange = change;
-            }
-            if (wChange < 0.0f) {
-                hChange = wChange;
-            } else if (hChange < 0.0f) {
-                wChange = hChange;
-            } else {
-                float change = MAX(wChange, hChange);
-                wChange = change;
-                hChange = change;
-            }
-        }
-        
-        self.bounds = CGRectMake(self.bounds.origin.x, self.bounds.origin.y,
-                                 self.bounds.size.width + (wChange),
-                                 self.bounds.size.height + (hChange));
-        
-        contentView.frame = CGRectMake(12, 12,
-                                 self.bounds.size.width-24, self.bounds.size.height-27);
-        resizingControl.frame =CGRectMake(self.bounds.size.width-25,
-                                   self.bounds.size.height-25, 25, 25);
-        deleteControl.frame = CGRectMake(0, 0, 25, 25);
-        
-        prevPoint = [recognizer locationInView:self];
-        
         
         /* Rotation */
-        /*
-        [self setCenter:CGPointMake(originalCenter.x + [recognizer translationInView:self].x ,
-                                    originalCenter.y + [recognizer translationInView:self].y )];
-        
-        CGPoint p1 = [recognizer locationInView:self.superview];
-        CGPoint p2 = self.center;
-        
-        float adjacent = p2.x-p1.x;
-        float opposite = p2.y-p1.y;
-        
-        float angle = atan2f(adjacent, opposite);
-        
-        [self setTransform:CGAffineTransformMakeRotation(angle*-1)];
-         */
-        
         float ang = atan2([recognizer locationInView:self.superview].y - self.center.y,
                           [recognizer locationInView:self.superview].x - self.center.x);
         float angleDiff = deltaAngle - ang;
@@ -141,7 +122,6 @@
     else if ([recognizer state] == UIGestureRecognizerStateEnded)
     {
         prevPoint = [recognizer locationInView:self];
-        
         [self setNeedsDisplay];
     }
 }
@@ -180,7 +160,6 @@
     [self addSubview:resizingControl];
     deltaAngle = atan2(self.frame.origin.y+self.frame.size.height - self.center.y,
                        self.frame.origin.x+self.frame.size.width - self.center.x);
-    
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -225,7 +204,6 @@
 - (void)translateUsingTouchLocation:(CGPoint)touchPoint {
     CGPoint newCenter = CGPointMake(self.center.x + touchPoint.x - touchStart.x,
                                     self.center.y + touchPoint.y - touchStart.y);
-    
     if (self.preventsPositionOutsideSuperview) {
         // Ensure the translation won't cause the view to move offscreen.
         CGFloat midPointX = CGRectGetMidX(self.bounds);
