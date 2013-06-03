@@ -15,7 +15,6 @@
 }
 
 @property (assign, nonatomic) UIView *contentView;
-@property (nonatomic) BOOL preventsLayoutWhileResizing;
 @property (nonatomic) BOOL preventsPositionOutsideSuperview;
 @property (nonatomic) CGFloat minWidth;
 @property (nonatomic) CGFloat minHeight;

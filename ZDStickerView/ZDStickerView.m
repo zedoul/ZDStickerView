@@ -18,6 +18,8 @@
 @property (strong, nonatomic) UIImageView *resizingControl;
 @property (strong, nonatomic) UIImageView *deleteControl;
 
+@property (nonatomic) BOOL preventsLayoutWhileResizing;
+
 @property (nonatomic) float deltaAngle;
 @property (nonatomic) CGPoint prevPoint;
 @property (nonatomic) CGAffineTransform startTransform;
@@ -29,7 +31,7 @@
 @implementation ZDStickerView
 @synthesize contentView, touchStart;
 
-@synthesize prevPoint,preventsLayoutWhileResizing; //resizing
+@synthesize prevPoint;
 @synthesize deltaAngle, startTransform; //rotation
 @synthesize resizingControl, deleteControl;
 @synthesize preventsPositionOutsideSuperview;
@@ -83,7 +85,7 @@
                 return;
             }
             
-            if (YES == preventsLayoutWhileResizing) {
+            if (YES == self.preventsLayoutWhileResizing) {
                 if (wChange < 0.0f && hChange < 0.0f) {
                     float change = MIN(wChange, hChange);
                     wChange = change;
@@ -142,7 +144,7 @@
         self.minHeight = self.bounds.size.height*0.5;
     }
     self.preventsPositionOutsideSuperview = YES;
-    self.preventsLayoutWhileResizing = NO;
+    self.preventsLayoutWhileResizing = YES;
     
     deleteControl = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
     deleteControl.backgroundColor = [UIColor clearColor];
