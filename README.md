@@ -2,7 +2,7 @@ ZDStickerView
 =============
 ZDStickerView is Objective-C module for iOS and offer complete configurability, including movement, resizing, rotation and more, with one finger.
 
-[![](https://pbs.twimg.com/media/BLbSkZ6CEAAR-f7.jpg:large)](https://pbs.twimg.com/media/BLbSkZ6CEAAR-f7.jpg:large)
+[![](https://github.com/zedoul/ZDStickerView/blob/develop/SCREENSHOT.png?raw=true)](https://github.com/zedoul/ZDStickerView/blob/develop/SCREENSHOT.png?raw=true)
 
 Highly influenced by [TDResizerView](https://github.com/Thavasidurai/TDResizerView) and [SPUserResizableView](https://github.com/spoletto/SPUserResizableView).
 
