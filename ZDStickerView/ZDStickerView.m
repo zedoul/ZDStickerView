@@ -57,6 +57,28 @@
     {
         prevPoint = [recognizer locationInView:self];
         [self setNeedsDisplay];
+        
+        /* Rotation */
+        /*
+        deltaAngle = atan2([recognizer locationInView:self.superview].y-self.center.y,
+                           [recognizer locationInView:self.superview].x-self.center.x);
+        startTransform = self.transform;
+         */
+        /*
+        deltaAngle = atan2([recognizer locationInView:self].y - self.center.y,
+                           [recognizer locationInView:self].x - self.center.x);
+         */
+        /*
+        deltaAngle = atan2([recognizer locationInView:self.superview].y - self.center.y,
+                          [recognizer locationInView:self.superview].x - self.center.x);
+        NSLog(@"recognizer [%f : %f]", [recognizer locationInView:self.superview].x,[recognizer locationInView:self.superview].y);
+        NSLog(@"self.center [%f : %f]", self.center.x,self.center.y);
+        NSLog(@"deltaAngle [%f]", deltaAngle);
+        */
+        //originalCenter = self.center;
+        //self.transform = CGAffineTransformMakeRotation(-1 * 180.0f * M_PI / 180.0f);
+        //startTransform = self.transform;
+        //NSLog(@"deltaAngle[%f]", deltaAngle);
     }
     else if ([recognizer state] == UIGestureRecognizerStateChanged)
     {
@@ -118,11 +140,39 @@
         
         prevPoint = [recognizer locationInView:self];
         
+        
+        /* Rotation */
+        /*
+        [self setCenter:CGPointMake(originalCenter.x + [recognizer translationInView:self].x ,
+                                    originalCenter.y + [recognizer translationInView:self].y )];
+        
+        CGPoint p1 = [recognizer locationInView:self.superview];
+        CGPoint p2 = self.center;
+        
+        float adjacent = p2.x-p1.x;
+        float opposite = p2.y-p1.y;
+        
+        float angle = atan2f(adjacent, opposite);
+        
+        [self setTransform:CGAffineTransformMakeRotation(angle*-1)];
+         */
+        
+        float ang = atan2([recognizer locationInView:self.superview].y - self.center.y,
+                          [recognizer locationInView:self.superview].x - self.center.x);
+        float angleDiff = deltaAngle - ang;
+        //deltaAngle = ang;
+        
+        //NSLog(@"angleDiff [%f] (deltaAngle[%f] - ang[%f])", angleDiff, deltaAngle, ang);
+        self.transform = CGAffineTransformMakeRotation(-angleDiff);
+        NSLog(@"ang [%f]", ang);
+        //self.transform = CGAffineTransformRotate(self.transform, angleDiff);
+        
         [self setNeedsDisplay];
     }
     else if ([recognizer state] == UIGestureRecognizerStateEnded)
     {
         prevPoint = [recognizer locationInView:self];
+        
         [self setNeedsDisplay];
     }
 }
@@ -131,8 +181,8 @@
 {
     if ([recognizer state] == UIGestureRecognizerStateBegan)
     {
-        deltaAngle = atan2([recognizer locationInView:self].y-self.center.y,
-                           [recognizer locationInView:self].x-self.center.x);
+        deltaAngle = atan2([recognizer locationInView:self.superview].y-self.center.y,
+                           [recognizer locationInView:self.superview].x-self.center.x);
         startTransform = self.transform;
     }
     else if ([recognizer state] == UIGestureRecognizerStateChanged)
@@ -145,13 +195,12 @@
     }
     else if ([recognizer state] == UIGestureRecognizerStateEnded)
     {
-        deltaAngle = atan2([recognizer locationInView:self].y-self.center.y,
-                           [recognizer locationInView:self].x-self.center.x);
+        deltaAngle = atan2([recognizer locationInView:self.superview].y-self.center.y,
+                           [recognizer locationInView:self.superview].x-self.center.x);
         startTransform = self.transform;
         [self setNeedsDisplay];
     }
 }
-
 
 - (void)setupDefaultAttributes {
     if (kSPUserResizableViewDefaultMinWidth > self.bounds.size.width*0.5) {
@@ -166,7 +215,7 @@
     
     deleteControl = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
     deleteControl.backgroundColor = [UIColor clearColor];
-    deleteControl.image = [UIImage imageNamed:@"close_gold.png" ];
+    deleteControl.image = [UIImage imageNamed:@"ZDBtn3.png" ];
     deleteControl.userInteractionEnabled = YES;
     UITapGestureRecognizer * singleTap = [[UITapGestureRecognizer alloc]
                                           initWithTarget:self
@@ -179,19 +228,21 @@
                                                                    25, 25)];
     resizingControl.backgroundColor = [UIColor clearColor];
     resizingControl.userInteractionEnabled = YES;
-    resizingControl.image = [UIImage imageNamed:@"button_02.png" ];
+    resizingControl.image = [UIImage imageNamed:@"ZDBtn2.png.png" ];
     UIPanGestureRecognizer* panResizeGesture = [[UIPanGestureRecognizer alloc]
                                                 initWithTarget:self
                                                 action:@selector(resizeTranslate:)];
     [resizingControl addGestureRecognizer:panResizeGesture];
     [self addSubview:resizingControl];
+    deltaAngle = atan2(self.frame.origin.y+self.frame.size.height - self.center.y,
+                       self.frame.origin.x+self.frame.size.width - self.center.x);
     
     //Rotating view which is in bottom left corner
     rotationControl = [[UIImageView alloc]initWithFrame:CGRectMake(0,
                                                                    self.frame.size.height-25,
                                                                    25, 25)];
     rotationControl.backgroundColor = [UIColor clearColor];
-    rotationControl.image = [UIImage imageNamed:@"button_01.png" ];
+    rotationControl.image = [UIImage imageNamed:@"ZDBtn1.png.png" ];
     rotationControl.userInteractionEnabled = YES;
     UIPanGestureRecognizer * panRotateGesture = [[UIPanGestureRecognizer alloc]
                                                  initWithTarget:self
