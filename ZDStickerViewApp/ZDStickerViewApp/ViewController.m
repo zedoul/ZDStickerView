@@ -27,7 +27,7 @@
     ZDStickerView *userResizableView = [[ZDStickerView alloc] initWithFrame:gripFrame];
     userResizableView.contentView = imageView;
 //    userResizableView.backgroundColor = [UIColor yellowColor];
-    userResizableView.preventsPositionOutsideSuperview = YES;
+    userResizableView.preventsPositionOutsideSuperview = NO;
     [userResizableView showEditingHandles];
     [self.view addSubview:userResizableView];
 }
