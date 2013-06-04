@@ -22,7 +22,7 @@
 		7C5C39F01755BCBA00803C08 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5C39EF1755BCBA00803C08 /* QuartzCore.framework */; };
 		7C5C39F61755C0FC00803C08 /* ZDBtn2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C39F21755C0FC00803C08 /* ZDBtn2.png */; };
 		7C5C39F71755C0FC00803C08 /* ZDBtn3.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C39F31755C0FC00803C08 /* ZDBtn3.png */; };
-		7C5C39FA1755C1D400803C08 /* sampleImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C5C39F91755C1D400803C08 /* sampleImage.png */; };
+		7C7BA13F175E330900A38953 /* sampleImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7C7BA13E175E330900A38953 /* sampleImage.jpg */; };
 		7CA7D584175C3DEB00C70BE6 /* SPGripViewBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CA7D583175C3DEB00C70BE6 /* SPGripViewBorderView.m */; };
 /* End PBXBuildFile section */
 
@@ -48,7 +48,7 @@
 		7C5C39EF1755BCBA00803C08 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7C5C39F21755C0FC00803C08 /* ZDBtn2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ZDBtn2.png; sourceTree = "<group>"; };
 		7C5C39F31755C0FC00803C08 /* ZDBtn3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ZDBtn3.png; sourceTree = "<group>"; };
-		7C5C39F91755C1D400803C08 /* sampleImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sampleImage.png; sourceTree = SOURCE_ROOT; };
+		7C7BA13E175E330900A38953 /* sampleImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sampleImage.jpg; sourceTree = SOURCE_ROOT; };
 		7CA7D582175C3DEB00C70BE6 /* SPGripViewBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPGripViewBorderView.h; sourceTree = "<group>"; };
 		7CA7D583175C3DEB00C70BE6 /* SPGripViewBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPGripViewBorderView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,7 +100,7 @@
 		7C5C39CA1755B15100803C08 /* ZDStickerViewApp */ = {
 			isa = PBXGroup;
 			children = (
-				7C5C39F91755C1D400803C08 /* sampleImage.png */,
+				7C7BA13E175E330900A38953 /* sampleImage.jpg */,
 				7C5C39D31755B15100803C08 /* AppDelegate.h */,
 				7C5C39D41755B15100803C08 /* AppDelegate.m */,
 				7C5C39DC1755B15100803C08 /* MainStoryboard.storyboard */,
@@ -197,7 +197,7 @@
 				7C5C39DE1755B15100803C08 /* MainStoryboard.storyboard in Resources */,
 				7C5C39F61755C0FC00803C08 /* ZDBtn2.png in Resources */,
 				7C5C39F71755C0FC00803C08 /* ZDBtn3.png in Resources */,
-				7C5C39FA1755C1D400803C08 /* sampleImage.png in Resources */,
+				7C7BA13F175E330900A38953 /* sampleImage.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

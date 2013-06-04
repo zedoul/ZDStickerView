@@ -21,9 +21,9 @@
     
 	// Do any additional setup after loading the view.
     UIImageView *imageView = [[UIImageView alloc]
-                              initWithImage:[UIImage imageNamed:@"sampleImage.png"]];
+                              initWithImage:[UIImage imageNamed:@"sampleImage.jpg"]];
     
-    CGRect gripFrame = CGRectMake(50, 50, 200, 150);
+    CGRect gripFrame = CGRectMake(50, 50, 140, 140);
     ZDStickerView *userResizableView = [[ZDStickerView alloc] initWithFrame:gripFrame];
     userResizableView.contentView = imageView;
 //    userResizableView.backgroundColor = [UIColor yellowColor];
