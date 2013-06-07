@@ -12,6 +12,8 @@
 #define kSPUserResizableViewGlobalInset 5.0
 #define kSPUserResizableViewDefaultMinWidth 48.0
 #define kSPUserResizableViewInteractiveBorderSize 10.0
+#define kZDStickerViewControlSize 36.0
+
 
 @interface ZDStickerView ()
 
@@ -69,9 +71,12 @@
                                      minHeight);
             contentView.frame = CGRectMake(12, 12,
                                      self.bounds.size.width-24, self.bounds.size.height-27);
-            resizingControl.frame =CGRectMake(self.bounds.size.width-25,
-                                       self.bounds.size.height-25, 25, 25);
-            deleteControl.frame = CGRectMake(0, 0, 25, 25);
+            resizingControl.frame =CGRectMake(self.bounds.size.width-kZDStickerViewControlSize,
+                                       self.bounds.size.height-kZDStickerViewControlSize,
+                                              kZDStickerViewControlSize,
+                                              kZDStickerViewControlSize);
+            deleteControl.frame = CGRectMake(0, 0,
+                                             kZDStickerViewControlSize, kZDStickerViewControlSize);
             prevPoint = [recognizer locationInView:self];
         } else {
             CGPoint point = [recognizer locationInView:self];
@@ -107,9 +112,11 @@
                                      self.bounds.size.height + (hChange));
             contentView.frame = CGRectMake(12, 12,
                                            self.bounds.size.width-24, self.bounds.size.height-27);
-            resizingControl.frame =CGRectMake(self.bounds.size.width-25,
-                                              self.bounds.size.height-25, 25, 25);
-            deleteControl.frame = CGRectMake(0, 0, 25, 25);
+            resizingControl.frame =CGRectMake(self.bounds.size.width-kZDStickerViewControlSize,
+                                              self.bounds.size.height-kZDStickerViewControlSize,
+                                              kZDStickerViewControlSize, kZDStickerViewControlSize);
+            deleteControl.frame = CGRectMake(0, 0,
+                                             kZDStickerViewControlSize, kZDStickerViewControlSize);
             prevPoint = [recognizer locationInView:self];
         }
         
@@ -146,7 +153,8 @@
     self.preventsPositionOutsideSuperview = YES;
     self.preventsLayoutWhileResizing = YES;
     
-    deleteControl = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
+    deleteControl = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0,
+                                                                 kZDStickerViewControlSize, kZDStickerViewControlSize)];
     deleteControl.backgroundColor = [UIColor clearColor];
     deleteControl.image = [UIImage imageNamed:@"ZDBtn3.png" ];
     deleteControl.userInteractionEnabled = YES;
@@ -156,9 +164,9 @@
     [deleteControl addGestureRecognizer:singleTap];
     [self addSubview:deleteControl];
     
-    resizingControl = [[UIImageView alloc]initWithFrame:CGRectMake(self.frame.size.width-25,
-                                                                   self.frame.size.height-25,
-                                                                   25, 25)];
+    resizingControl = [[UIImageView alloc]initWithFrame:CGRectMake(self.frame.size.width-kZDStickerViewControlSize,
+                                                                   self.frame.size.height-kZDStickerViewControlSize,
+                                                                   kZDStickerViewControlSize, kZDStickerViewControlSize)];
     resizingControl.backgroundColor = [UIColor clearColor];
     resizingControl.userInteractionEnabled = YES;
     resizingControl.image = [UIImage imageNamed:@"ZDBtn2.png.png" ];
