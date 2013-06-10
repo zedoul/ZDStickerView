@@ -69,8 +69,6 @@
                                      self.bounds.origin.y,
                                      minWidth,
                                      minHeight);
-            contentView.frame = CGRectMake(12, 12,
-                                     self.bounds.size.width-24, self.bounds.size.height-27);
             resizingControl.frame =CGRectMake(self.bounds.size.width-kZDStickerViewControlSize,
                                        self.bounds.size.height-kZDStickerViewControlSize,
                                               kZDStickerViewControlSize,
@@ -78,6 +76,7 @@
             deleteControl.frame = CGRectMake(0, 0,
                                              kZDStickerViewControlSize, kZDStickerViewControlSize);
             prevPoint = [recognizer locationInView:self];
+             
         } else {
             CGPoint point = [recognizer locationInView:self];
             float wChange = 0.0, hChange = 0.0;
@@ -110,8 +109,6 @@
             self.bounds = CGRectMake(self.bounds.origin.x, self.bounds.origin.y,
                                      self.bounds.size.width + (wChange),
                                      self.bounds.size.height + (hChange));
-            contentView.frame = CGRectMake(12, 12,
-                                           self.bounds.size.width-24, self.bounds.size.height-27);
             resizingControl.frame =CGRectMake(self.bounds.size.width-kZDStickerViewControlSize,
                                               self.bounds.size.height-kZDStickerViewControlSize,
                                               kZDStickerViewControlSize, kZDStickerViewControlSize);
@@ -197,6 +194,7 @@
     [contentView removeFromSuperview];
     contentView = newContentView;
     contentView.frame = CGRectInset(self.bounds, kSPUserResizableViewGlobalInset + kSPUserResizableViewInteractiveBorderSize/2, kSPUserResizableViewGlobalInset + kSPUserResizableViewInteractiveBorderSize/2);
+    contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self addSubview:contentView];
     
     [self bringSubviewToFront:borderView];

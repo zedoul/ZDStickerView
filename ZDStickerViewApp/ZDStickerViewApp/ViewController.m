@@ -23,13 +23,21 @@
     UIImageView *imageView = [[UIImageView alloc]
                               initWithImage:[UIImage imageNamed:@"sampleImage.jpg"]];
     
-    CGRect gripFrame = CGRectMake(50, 50, 140, 140);
-    ZDStickerView *userResizableView = [[ZDStickerView alloc] initWithFrame:gripFrame];
-    userResizableView.contentView = imageView;
-//    userResizableView.backgroundColor = [UIColor yellowColor];
-    userResizableView.preventsPositionOutsideSuperview = NO;
-    [userResizableView showEditingHandles];
-    [self.view addSubview:userResizableView];
+    CGRect gripFrame1 = CGRectMake(50, 50, 140, 140);
+    ZDStickerView *userResizableView1 = [[ZDStickerView alloc] initWithFrame:gripFrame1];
+    userResizableView1.contentView = imageView;
+    userResizableView1.preventsPositionOutsideSuperview = NO;
+    [userResizableView1 showEditingHandles];
+    [self.view addSubview:userResizableView1];
+    
+    CGRect gripFrame2 = CGRectMake(50, 200, 180, 140);
+    UITextView *textView = [[UITextView alloc] initWithFrame:gripFrame2];
+    textView.text = @"ZDStickerView is Objective-C module for iOS and offer complete configurability, including movement, resizing, rotation and more, with one finger.";
+    ZDStickerView *userResizableView2 = [[ZDStickerView alloc] initWithFrame:gripFrame2];
+    userResizableView2.contentView = textView;
+    userResizableView2.preventsPositionOutsideSuperview = NO;
+    [userResizableView2 showEditingHandles];
+    [self.view addSubview:userResizableView2];
 }
 
 - (void)didReceiveMemoryWarning
