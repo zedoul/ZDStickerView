@@ -37,6 +37,7 @@
 @synthesize deltaAngle, startTransform; //rotation
 @synthesize resizingControl, deleteControl;
 @synthesize preventsPositionOutsideSuperview;
+@synthesize preventsResizing;
 @synthesize minWidth, minHeight;
 
 /*
@@ -121,7 +122,9 @@
         float ang = atan2([recognizer locationInView:self.superview].y - self.center.y,
                           [recognizer locationInView:self.superview].x - self.center.x);
         float angleDiff = deltaAngle - ang;
-        self.transform = CGAffineTransformMakeRotation(-angleDiff);
+        if (NO == preventsResizing) {
+            self.transform = CGAffineTransformMakeRotation(-angleDiff);
+        }
         
         borderView.frame = CGRectInset(self.bounds, kSPUserResizableViewGlobalInset, kSPUserResizableViewGlobalInset);
         [borderView setNeedsDisplay];
@@ -149,6 +152,7 @@
     }
     self.preventsPositionOutsideSuperview = YES;
     self.preventsLayoutWhileResizing = YES;
+    self.preventsResizing = NO;
     
     deleteControl = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0,
                                                                  kZDStickerViewControlSize, kZDStickerViewControlSize)];
@@ -207,6 +211,12 @@
     contentView.frame = CGRectInset(self.bounds, kSPUserResizableViewGlobalInset + kSPUserResizableViewInteractiveBorderSize/2, kSPUserResizableViewGlobalInset + kSPUserResizableViewInteractiveBorderSize/2);
     
     borderView.frame = CGRectInset(self.bounds, kSPUserResizableViewGlobalInset, kSPUserResizableViewGlobalInset);
+    resizingControl.frame =CGRectMake(self.bounds.size.width-kZDStickerViewControlSize,
+                                      self.bounds.size.height-kZDStickerViewControlSize,
+                                      kZDStickerViewControlSize,
+                                      kZDStickerViewControlSize);
+    deleteControl.frame = CGRectMake(0, 0,
+                                     kZDStickerViewControlSize, kZDStickerViewControlSize);
     [borderView setNeedsDisplay];
 }
 
