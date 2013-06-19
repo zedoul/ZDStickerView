@@ -213,14 +213,23 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
     touchStart = [touch locationInView:self.superview];
+    if([_delegate respondsToSelector:@selector(stickerViewDidBeginEditing:)]) {
+        [_delegate stickerViewDidBeginEditing:self];
+    }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     // Notify the delegate we've ended our editing session.
+    if([_delegate respondsToSelector:@selector(stickerViewDidEndEditing:)]) {
+        [_delegate stickerViewDidEndEditing:self];
+    }
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
     // Notify the delegate we've ended our editing session.
+    if([_delegate respondsToSelector:@selector(stickerViewDidCancelEditing:)]) {
+        [_delegate stickerViewDidCancelEditing:self];
+    }
 }
 
 - (void)translateUsingTouchLocation:(CGPoint)touchPoint {
@@ -250,6 +259,16 @@
     CGPoint touch = [[touches anyObject] locationInView:self.superview];
     [self translateUsingTouchLocation:touch];
     touchStart = touch;
+}
+
+- (void)hideDelHandle
+{
+    deleteControl.hidden = YES;
+}
+
+- (void)showDelHandle
+{
+    deleteControl.hidden = NO;
 }
 
 - (void)hideEditingHandles
