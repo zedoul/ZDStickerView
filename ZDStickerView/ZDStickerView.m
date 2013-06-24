@@ -1,8 +1,7 @@
 //
 //  ZDStickerView.m
-//  ZDStickerViewApp
 //
-//  Created by zedoul on 5/29/13.
+//  Created by Seonghyun Kim on 5/29/13.
 //  Copyright (c) 2013 scipi. All rights reserved.
 //
 
@@ -38,6 +37,7 @@
 @synthesize resizingControl, deleteControl;
 @synthesize preventsPositionOutsideSuperview;
 @synthesize preventsResizing;
+@synthesize preventsDeleting;
 @synthesize minWidth, minHeight;
 
 /*
@@ -51,8 +51,13 @@
 
 -(void)singleTap:(UIPanGestureRecognizer *)recognizer
 {
-    UIView * close = (UIView *)[recognizer view];
-    [close.superview removeFromSuperview];
+    if([_delegate respondsToSelector:@selector(stickerViewDidClose:)]) {
+        [_delegate stickerViewDidClose:self];
+    }
+    if (NO == self.preventsDeleting) {
+        UIView * close = (UIView *)[recognizer view];
+        [close.superview removeFromSuperview];
+    }
 }
 
 -(void)resizeTranslate:(UIPanGestureRecognizer *)recognizer
@@ -153,6 +158,7 @@
     self.preventsPositionOutsideSuperview = YES;
     self.preventsLayoutWhileResizing = YES;
     self.preventsResizing = NO;
+    self.preventsDeleting = NO;
     
     deleteControl = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0,
                                                                  kZDStickerViewControlSize, kZDStickerViewControlSize)];
