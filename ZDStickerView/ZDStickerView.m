@@ -51,12 +51,13 @@
 
 -(void)singleTap:(UIPanGestureRecognizer *)recognizer
 {
-    if([_delegate respondsToSelector:@selector(stickerViewDidClose:)]) {
-        [_delegate stickerViewDidClose:self];
-    }
     if (NO == self.preventsDeleting) {
         UIView * close = (UIView *)[recognizer view];
         [close.superview removeFromSuperview];
+    }
+    
+    if([_delegate respondsToSelector:@selector(stickerViewDidClose:)]) {
+        [_delegate stickerViewDidClose:self];
     }
 }
 
