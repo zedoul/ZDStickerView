@@ -20,12 +20,21 @@
     [super viewDidLoad];
     
 	// Do any additional setup after loading the view.
-    UIImageView *imageView = [[UIImageView alloc]
-                              initWithImage:[UIImage imageNamed:@"sampleImage.jpg"]];
+    UIImageView *imageView1 = [[UIImageView alloc]
+                              initWithImage:[UIImage imageNamed:@"sampleImage1.jpg"]];
     
+    UIImageView *imageView2 = [[UIImageView alloc]
+                               initWithImage:[UIImage imageNamed:@"sampleImage2.png"]];
+    imageView2.backgroundColor = [UIColor clearColor];
     CGRect gripFrame1 = CGRectMake(50, 50, 140, 140);
+    
+    UIView* contentView = [[UIView alloc] initWithFrame:gripFrame1];
+    [contentView setBackgroundColor:[UIColor blackColor]];
+    [contentView addSubview:imageView1];
+    [contentView addSubview:imageView2];
+    
     ZDStickerView *userResizableView1 = [[ZDStickerView alloc] initWithFrame:gripFrame1];
-    userResizableView1.contentView = imageView;
+    userResizableView1.contentView = contentView;//contentView;
     userResizableView1.preventsPositionOutsideSuperview = NO;
     [userResizableView1 showEditingHandles];
     [self.view addSubview:userResizableView1];
