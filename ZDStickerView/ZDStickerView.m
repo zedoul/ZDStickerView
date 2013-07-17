@@ -208,6 +208,13 @@
     contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [self addSubview:contentView];
     
+    for (UIView* subview in [contentView subviews]) {
+        [subview setFrame:CGRectMake(0, 0,
+                                     contentView.frame.size.width,
+                                     contentView.frame.size.height)];
+        subview.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    }
+    
     [self bringSubviewToFront:borderView];
     [self bringSubviewToFront:resizingControl];
     [self bringSubviewToFront:deleteControl];
@@ -216,8 +223,17 @@
 - (void)setFrame:(CGRect)newFrame {
     [super setFrame:newFrame];
     contentView.frame = CGRectInset(self.bounds, kSPUserResizableViewGlobalInset + kSPUserResizableViewInteractiveBorderSize/2, kSPUserResizableViewGlobalInset + kSPUserResizableViewInteractiveBorderSize/2);
+    contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    for (UIView* subview in [contentView subviews]) {
+        [subview setFrame:CGRectMake(0, 0,
+                                     contentView.frame.size.width,
+                                     contentView.frame.size.height)];
+        subview.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    }
     
-    borderView.frame = CGRectInset(self.bounds, kSPUserResizableViewGlobalInset, kSPUserResizableViewGlobalInset);
+    borderView.frame = CGRectInset(self.bounds,
+                                   kSPUserResizableViewGlobalInset,
+                                   kSPUserResizableViewGlobalInset);
     resizingControl.frame =CGRectMake(self.bounds.size.width-kZDStickerViewControlSize,
                                       self.bounds.size.height-kZDStickerViewControlSize,
                                       kZDStickerViewControlSize,
