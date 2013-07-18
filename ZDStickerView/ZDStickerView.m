@@ -74,8 +74,8 @@
         {
             self.bounds = CGRectMake(self.bounds.origin.x,
                                      self.bounds.origin.y,
-                                     minWidth,
-                                     minHeight);
+                                     minWidth+1,
+                                     minHeight+1);
             resizingControl.frame =CGRectMake(self.bounds.size.width-kZDStickerViewControlSize,
                                        self.bounds.size.height-kZDStickerViewControlSize,
                                               kZDStickerViewControlSize,
