@@ -64,6 +64,11 @@
 
 #pragma mark - delegate functions
 
+- (void)stickerViewDidLongPressed:(ZDStickerView *)sticker
+{
+    NSLog(@"%s [%d]",__func__, sticker.tag);
+}
+
 - (void)stickerViewDidClose:(ZDStickerView *)sticker
 {
     NSLog(@"%s [%d]",__func__, sticker.tag);

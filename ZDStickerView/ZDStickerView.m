@@ -51,6 +51,15 @@
 }
 */
 
+-(void)longPress:(UIPanGestureRecognizer *)recognizer
+{
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        if([_delegate respondsToSelector:@selector(stickerViewDidLongPressed:)]) {
+            [_delegate stickerViewDidLongPressed:self];
+        }
+    }
+}
+
 -(void)singleTap:(UIPanGestureRecognizer *)recognizer
 {
     if (NO == self.preventsDeleting) {
@@ -180,6 +189,11 @@
     self.preventsResizing = NO;
     self.preventsDeleting = NO;
     self.preventsCustomButton = YES;
+    
+    UILongPressGestureRecognizer* longpress = [[UILongPressGestureRecognizer alloc]
+                                               initWithTarget:self
+                                               action:@selector(longPress:)];
+    [self addGestureRecognizer:longpress];
     
     deleteControl = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0,
                                                                  kZDStickerViewControlSize, kZDStickerViewControlSize)];
