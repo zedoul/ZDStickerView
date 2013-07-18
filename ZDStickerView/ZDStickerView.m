@@ -18,6 +18,7 @@
 
 @property (strong, nonatomic) UIImageView *resizingControl;
 @property (strong, nonatomic) UIImageView *deleteControl;
+@property (strong, nonatomic) UIImageView *customControl;
 
 @property (nonatomic) BOOL preventsLayoutWhileResizing;
 
@@ -34,10 +35,11 @@
 
 @synthesize prevPoint;
 @synthesize deltaAngle, startTransform; //rotation
-@synthesize resizingControl, deleteControl;
+@synthesize resizingControl, deleteControl, customControl;
 @synthesize preventsPositionOutsideSuperview;
 @synthesize preventsResizing;
 @synthesize preventsDeleting;
+@synthesize preventsCustomButton;
 @synthesize minWidth, minHeight;
 
 /*
@@ -58,6 +60,15 @@
     
     if([_delegate respondsToSelector:@selector(stickerViewDidClose:)]) {
         [_delegate stickerViewDidClose:self];
+    }
+}
+
+-(void)customTap:(UIPanGestureRecognizer *)recognizer
+{
+    if (NO == self.preventsCustomButton) {
+        if([_delegate respondsToSelector:@selector(stickerViewDidCustomButtonTap:)]) {
+            [_delegate stickerViewDidCustomButtonTap:self];
+        }
     }
 }
 
@@ -82,6 +93,10 @@
                                               kZDStickerViewControlSize);
             deleteControl.frame = CGRectMake(0, 0,
                                              kZDStickerViewControlSize, kZDStickerViewControlSize);
+            customControl.frame =CGRectMake(self.bounds.size.width-kZDStickerViewControlSize,
+                                              0,
+                                              kZDStickerViewControlSize,
+                                              kZDStickerViewControlSize);
             prevPoint = [recognizer locationInView:self];
              
         } else {
@@ -121,6 +136,10 @@
                                               kZDStickerViewControlSize, kZDStickerViewControlSize);
             deleteControl.frame = CGRectMake(0, 0,
                                              kZDStickerViewControlSize, kZDStickerViewControlSize);
+            customControl.frame =CGRectMake(self.bounds.size.width-kZDStickerViewControlSize,
+                                            0,
+                                            kZDStickerViewControlSize,
+                                            kZDStickerViewControlSize);
             prevPoint = [recognizer locationInView:self];
         }
         
@@ -160,6 +179,7 @@
     self.preventsLayoutWhileResizing = YES;
     self.preventsResizing = NO;
     self.preventsDeleting = NO;
+    self.preventsCustomButton = YES;
     
     deleteControl = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0,
                                                                  kZDStickerViewControlSize, kZDStickerViewControlSize)];
@@ -183,6 +203,20 @@
                                                 action:@selector(resizeTranslate:)];
     [resizingControl addGestureRecognizer:panResizeGesture];
     [self addSubview:resizingControl];
+    
+    customControl = [[UIImageView alloc]initWithFrame:CGRectMake(self.frame.size.width-kZDStickerViewControlSize,
+                                                                   0,
+                                                                   kZDStickerViewControlSize, kZDStickerViewControlSize)];
+    customControl.backgroundColor = [UIColor clearColor];
+    customControl.userInteractionEnabled = YES;
+    customControl.image = nil;
+    UITapGestureRecognizer * customTapGesture = [[UITapGestureRecognizer alloc]
+                                          initWithTarget:self
+                                          action:@selector(customTap:)];
+    [customControl addGestureRecognizer:customTapGesture];
+    [self addSubview:customControl];
+    
+    
     deltaAngle = atan2(self.frame.origin.y+self.frame.size.height - self.center.y,
                        self.frame.origin.x+self.frame.size.width - self.center.x);
 }
@@ -218,6 +252,7 @@
     [self bringSubviewToFront:borderView];
     [self bringSubviewToFront:resizingControl];
     [self bringSubviewToFront:deleteControl];
+    [self bringSubviewToFront:customControl];
 }
 
 - (void)setFrame:(CGRect)newFrame {
@@ -240,6 +275,10 @@
                                       kZDStickerViewControlSize);
     deleteControl.frame = CGRectMake(0, 0,
                                      kZDStickerViewControlSize, kZDStickerViewControlSize);
+    customControl.frame =CGRectMake(self.bounds.size.width-kZDStickerViewControlSize,
+                                      0,
+                                      kZDStickerViewControlSize,
+                                      kZDStickerViewControlSize);
     [borderView setNeedsDisplay];
 }
 
@@ -316,6 +355,34 @@
     resizingControl.hidden = NO;
     deleteControl.hidden = NO;
     [borderView setHidden:NO];
+}
+
+- (void)showCustmomHandle
+{
+    customControl.hidden = NO;
+}
+
+- (void)hideCustomHandle
+{
+    customControl.hidden = YES;
+}
+
+- (void)setButton:(ZDSTICKERVIEW_BUTTONS)type image:(UIImage*)image
+{
+    switch (type) {
+        case ZDSTICKERVIEW_BUTTON_RESIZE:
+            resizingControl.image = image;
+            break;
+        case ZDSTICKERVIEW_BUTTON_DEL:
+            deleteControl.image = image;
+            break;
+        case ZDSTICKERVIEW_BUTTON_CUSTOM:
+            customControl.image = image;
+            break;
+            
+        default:
+            break;
+    }
 }
 
 @end

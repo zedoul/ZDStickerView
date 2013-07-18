@@ -8,6 +8,14 @@
 #import <UIKit/UIKit.h>
 #import "SPGripViewBorderView.h"
 
+typedef enum {
+    ZDSTICKERVIEW_BUTTON_NULL,
+    ZDSTICKERVIEW_BUTTON_DEL,
+    ZDSTICKERVIEW_BUTTON_RESIZE,
+    ZDSTICKERVIEW_BUTTON_CUSTOM,
+    ZDSTICKERVIEW_BUTTON_MAX
+} ZDSTICKERVIEW_BUTTONS;
+
 @protocol ZDStickerViewDelegate;
 
 @interface ZDStickerView : UIView
@@ -19,6 +27,7 @@
 @property (nonatomic) BOOL preventsPositionOutsideSuperview; //default = YES
 @property (nonatomic) BOOL preventsResizing; //default = NO
 @property (nonatomic) BOOL preventsDeleting; //default = NO
+@property (nonatomic) BOOL preventsCustomButton; //default = YES
 @property (nonatomic) CGFloat minWidth;
 @property (nonatomic) CGFloat minHeight;
 
@@ -28,6 +37,9 @@
 - (void)showDelHandle;
 - (void)hideEditingHandles;
 - (void)showEditingHandles;
+- (void)showCustmomHandle;
+- (void)hideCustomHandle;
+- (void)setButton:(ZDSTICKERVIEW_BUTTONS)type image:(UIImage*)image;
 
 @end
 
@@ -38,6 +50,7 @@
 - (void)stickerViewDidEndEditing:(ZDStickerView *)sticker;
 - (void)stickerViewDidCancelEditing:(ZDStickerView *)sticker;
 - (void)stickerViewDidClose:(ZDStickerView *)sticker;
+- (void)stickerViewDidCustomButtonTap:(ZDStickerView *)sticker;
 @end
 
 
