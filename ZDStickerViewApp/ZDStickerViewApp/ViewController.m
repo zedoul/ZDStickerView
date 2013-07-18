@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "ZDStickerView.h"
 
-@interface ViewController ()
+@interface ViewController () <ZDStickerViewDelegate>
 
 @end
 
@@ -34,6 +34,8 @@
     [contentView addSubview:imageView2];
     
     ZDStickerView *userResizableView1 = [[ZDStickerView alloc] initWithFrame:gripFrame1];
+    userResizableView1.tag = 0;
+    userResizableView1.delegate = self;
     userResizableView1.contentView = contentView;//contentView;
     userResizableView1.preventsPositionOutsideSuperview = NO;
     [userResizableView1 showEditingHandles];
@@ -43,9 +45,14 @@
     UITextView *textView = [[UITextView alloc] initWithFrame:gripFrame2];
     textView.text = @"ZDStickerView is Objective-C module for iOS and offer complete configurability, including movement, resizing, rotation and more, with one finger.";
     ZDStickerView *userResizableView2 = [[ZDStickerView alloc] initWithFrame:gripFrame2];
+    userResizableView2.tag = 1;
+    userResizableView2.delegate = self;
     userResizableView2.contentView = textView;
     userResizableView2.preventsPositionOutsideSuperview = NO;
     [userResizableView2 showEditingHandles];
+    userResizableView2.preventsCustomButton = NO;
+    [userResizableView2 setButton:ZDSTICKERVIEW_BUTTON_CUSTOM
+                            image:[UIImage imageNamed:@"Write.png"]];
     [self.view addSubview:userResizableView2];
 }
 
@@ -53,6 +60,23 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - delegate functions
+
+- (void)stickerViewDidLongPressed:(ZDStickerView *)sticker
+{
+    NSLog(@"%s [%d]",__func__, sticker.tag);
+}
+
+- (void)stickerViewDidClose:(ZDStickerView *)sticker
+{
+    NSLog(@"%s [%d]",__func__, sticker.tag);
+}
+
+- (void)stickerViewDidCustomButtonTap:(ZDStickerView *)sticker
+{
+    NSLog(@"%s [%d]",__func__, sticker.tag);
 }
 
 @end
