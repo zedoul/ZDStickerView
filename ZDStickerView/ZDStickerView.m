@@ -90,7 +90,7 @@
     }
     else if ([recognizer state] == UIGestureRecognizerStateChanged)
     {
-        if (self.bounds.size.width < minWidth || self.bounds.size.width < minHeight)
+        if (self.bounds.size.width < minWidth || self.bounds.size.height < minHeight)
         {
             self.bounds = CGRectMake(self.bounds.origin.x,
                                      self.bounds.origin.y,
