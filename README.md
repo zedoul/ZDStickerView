@@ -20,7 +20,7 @@ For an example of how to use ZDStickerView, please see the included example proj
 
 ### References
 
-Highly influenced by [TDResizerView](https://github.com/Thavasidurai/TDResizerView) and [ZDStickerView](https://github.com/spoletto/ZDStickerView).
+Highly influenced by [TDResizerView](https://github.com/Thavasidurai/TDResizerView) and [SPUserResizableView](https://github.com/spoletto/SPUserResizableView).
 
 Licence
 ========
