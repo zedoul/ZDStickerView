@@ -1,5 +1,5 @@
-ZDStickerView
-=============
+# ZDStickerView [![Donate on Gittip](http://badgr.co/gittip/zedoul.png)](https://www.gittip.com/zedoul/)
+
 ZDStickerView is Objective-C module for iOS and offer complete configurability, including movement, resizing, rotation and more, with one finger.
 
 [![](https://github.com/zedoul/ZDStickerView/blob/develop/SCREENSHOT.png?raw=true)](https://github.com/zedoul/ZDStickerView/blob/develop/SCREENSHOT.png?raw=true)
