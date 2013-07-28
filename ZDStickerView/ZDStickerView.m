@@ -51,6 +51,7 @@
 }
 */
 
+#ifdef ZDSTICKERVIEW_LONGPRESS
 -(void)longPress:(UIPanGestureRecognizer *)recognizer
 {
     if (recognizer.state == UIGestureRecognizerStateBegan) {
@@ -59,6 +60,7 @@
         }
     }
 }
+#endif
 
 -(void)singleTap:(UIPanGestureRecognizer *)recognizer
 {
@@ -189,12 +191,12 @@
     self.preventsResizing = NO;
     self.preventsDeleting = NO;
     self.preventsCustomButton = YES;
-    
+#ifdef ZDSTICKERVIEW_LONGPRESS
     UILongPressGestureRecognizer* longpress = [[UILongPressGestureRecognizer alloc]
                                                initWithTarget:self
                                                action:@selector(longPress:)];
     [self addGestureRecognizer:longpress];
-    
+#endif                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
     deleteControl = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0,
                                                                  kZDStickerViewControlSize, kZDStickerViewControlSize)];
     deleteControl.backgroundColor = [UIColor clearColor];
@@ -361,13 +363,21 @@
 {
     resizingControl.hidden = YES;
     deleteControl.hidden = YES;
+    customControl.hidden = YES;
     [borderView setHidden:YES];
 }
 
 - (void)showEditingHandles
 {
-    resizingControl.hidden = NO;
-    deleteControl.hidden = NO;
+    if (NO == preventsCustomButton) {
+        customControl.hidden = NO;
+    }
+    if (NO == preventsDeleting) {
+        deleteControl.hidden = NO;
+    }
+    if (NO == preventsResizing) {
+        resizingControl.hidden = NO;
+    }
     [borderView setHidden:NO];
 }
 

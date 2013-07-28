@@ -50,7 +50,9 @@ typedef enum {
 - (void)stickerViewDidEndEditing:(ZDStickerView *)sticker;
 - (void)stickerViewDidCancelEditing:(ZDStickerView *)sticker;
 - (void)stickerViewDidClose:(ZDStickerView *)sticker;
+#ifdef ZDSTICKERVIEW_LONGPRESS
 - (void)stickerViewDidLongPressed:(ZDStickerView *)sticker;
+#endif
 - (void)stickerViewDidCustomButtonTap:(ZDStickerView *)sticker;
 @end
 
