@@ -77,6 +77,7 @@
 - (void)stickerViewDidCustomButtonTap:(ZDStickerView *)sticker
 {
     NSLog(@"%s [%d]",__func__, sticker.tag);
+    [((UITextView*)sticker.contentView) becomeFirstResponder];
 }
 
 @end
