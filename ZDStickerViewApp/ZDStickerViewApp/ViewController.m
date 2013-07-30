@@ -49,10 +49,11 @@
     userResizableView2.delegate = self;
     userResizableView2.contentView = textView;
     userResizableView2.preventsPositionOutsideSuperview = NO;
-    [userResizableView2 showEditingHandles];
     userResizableView2.preventsCustomButton = NO;
     [userResizableView2 setButton:ZDSTICKERVIEW_BUTTON_CUSTOM
                             image:[UIImage imageNamed:@"Write.png"]];
+    userResizableView2.preventsResizing = YES;
+    [userResizableView2 showEditingHandles];
     [self.view addSubview:userResizableView2];
 }
 
