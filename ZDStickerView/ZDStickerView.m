@@ -344,6 +344,11 @@
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    CGPoint touchLocation = [[touches anyObject] locationInView:self];
+    if (CGRectContainsPoint(resizingControl.frame, touchLocation)) {
+        return;
+    }
+    
     CGPoint touch = [[touches anyObject] locationInView:self.superview];
     [self translateUsingTouchLocation:touch];
     touchStart = touch;
@@ -371,12 +376,18 @@
 {
     if (NO == preventsCustomButton) {
         customControl.hidden = NO;
+    } else {
+        customControl.hidden = YES;
     }
     if (NO == preventsDeleting) {
         deleteControl.hidden = NO;
+    } else {
+        deleteControl.hidden = YES;
     }
     if (NO == preventsResizing) {
         resizingControl.hidden = NO;
+    } else {
+        resizingControl.hidden = YES;
     }
     [borderView setHidden:NO];
 }
