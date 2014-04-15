@@ -392,7 +392,7 @@
     [borderView setHidden:NO];
 }
 
-- (void)showCustmomHandle
+- (void)showCustomHandle
 {
     customControl.hidden = NO;
 }
