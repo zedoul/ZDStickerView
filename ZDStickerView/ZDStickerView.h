@@ -37,7 +37,7 @@ typedef enum {
 - (void)showDelHandle;
 - (void)hideEditingHandles;
 - (void)showEditingHandles;
-- (void)showCustmomHandle;
+- (void)showCustomHandle;
 - (void)hideCustomHandle;
 - (void)setButton:(ZDSTICKERVIEW_BUTTONS)type image:(UIImage*)image;
 
