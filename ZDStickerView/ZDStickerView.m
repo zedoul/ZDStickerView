@@ -115,29 +115,31 @@
             float wChange = 0.0, hChange = 0.0;
             
             wChange = (point.x - prevPoint.x);
-            hChange = (point.y - prevPoint.y);
+            float wRatioChange = (wChange/(float)self.bounds.size.width);
+            
+            hChange = wRatioChange * self.bounds.size.height;
             
             if (ABS(wChange) > 20.0f || ABS(hChange) > 20.0f) {
                 prevPoint = [recognizer locationInView:self];
                 return;
             }
             
-            if (YES == self.preventsLayoutWhileResizing) {
-                if (wChange < 0.0f && hChange < 0.0f) {
-                    float change = MIN(wChange, hChange);
-                    wChange = change;
-                    hChange = change;
-                }
-                if (wChange < 0.0f) {
-                    hChange = wChange;
-                } else if (hChange < 0.0f) {
-                    wChange = hChange;
-                } else {
-                    float change = MAX(wChange, hChange);
-                    wChange = change;
-                    hChange = change;
-                }
-            }
+//            if (YES == self.preventsLayoutWhileResizing) {
+//                if (wChange < 0.0f && hChange < 0.0f) {
+//                    float change = MIN(wChange, hChange);
+//                    wChange = change;
+//                    hChange = change;
+//                }
+//                if (wChange < 0.0f) {
+//                    hChange = wChange;
+//                } else if (hChange < 0.0f) {
+//                    wChange = hChange;
+//                } else {
+//                    float change = MAX(wChange, hChange);
+//                    wChange = change;
+//                    hChange = change;
+//                }
+//            }
             
             self.bounds = CGRectMake(self.bounds.origin.x, self.bounds.origin.y,
                                      self.bounds.size.width + (wChange),
