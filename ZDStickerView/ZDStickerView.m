@@ -124,23 +124,6 @@
                 return;
             }
             
-//            if (YES == self.preventsLayoutWhileResizing) {
-//                if (wChange < 0.0f && hChange < 0.0f) {
-//                    float change = MIN(wChange, hChange);
-//                    wChange = change;
-//                    hChange = change;
-//                }
-//                if (wChange < 0.0f) {
-//                    hChange = wChange;
-//                } else if (hChange < 0.0f) {
-//                    wChange = hChange;
-//                } else {
-//                    float change = MAX(wChange, hChange);
-//                    wChange = change;
-//                    hChange = change;
-//                }
-//            }
-            
             self.bounds = CGRectMake(self.bounds.origin.x, self.bounds.origin.y,
                                      self.bounds.size.width + (wChange),
                                      self.bounds.size.height + (hChange));
