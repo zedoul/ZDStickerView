@@ -1,12 +1,12 @@
 //
-//  ZDStickerView.h
+// ZDStickerView.h
 //
-//  Created by Seonghyun Kim on 5/29/13.
-//  Copyright (c) 2013 scipi. All rights reserved.
+// Created by Seonghyun Kim on 5/29/13.
+// Copyright (c) 2013 scipi. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import "SPGripViewBorderView.h"
+
 
 typedef enum {
     ZDSTICKERVIEW_BUTTON_NULL,
@@ -18,20 +18,20 @@ typedef enum {
 
 @protocol ZDStickerViewDelegate;
 
-@interface ZDStickerView : UIView
-{
-    SPGripViewBorderView *borderView;
-}
 
-@property (assign, nonatomic) UIView *contentView;
-@property (nonatomic) BOOL preventsPositionOutsideSuperview; //default = YES
-@property (nonatomic) BOOL preventsResizing; //default = NO
-@property (nonatomic) BOOL preventsDeleting; //default = NO
-@property (nonatomic) BOOL preventsCustomButton; //default = YES
+@interface ZDStickerView : UIView
+
+@property (nonatomic, strong) UIView *contentView;
+
+@property (nonatomic) BOOL preventsPositionOutsideSuperview;    // default = YES
+@property (nonatomic) BOOL preventsResizing;                    // default = NO
+@property (nonatomic) BOOL preventsDeleting;                    // default = NO
+@property (nonatomic) BOOL preventsCustomButton;                // default = YES
+@property (nonatomic) BOOL translucencySticker;                // default = YES
 @property (nonatomic) CGFloat minWidth;
 @property (nonatomic) CGFloat minHeight;
 
-@property (strong, nonatomic) id <ZDStickerViewDelegate> delegate;
+@property (weak, nonatomic) id <ZDStickerViewDelegate> stickerViewDelegate;
 
 - (void)hideDelHandle;
 - (void)showDelHandle;
@@ -39,9 +39,10 @@ typedef enum {
 - (void)showEditingHandles;
 - (void)showCustomHandle;
 - (void)hideCustomHandle;
-- (void)setButton:(ZDSTICKERVIEW_BUTTONS)type image:(UIImage*)image;
-
+- (void)setButton:(ZDSTICKERVIEW_BUTTONS)type image:(UIImage *)image;
+- (BOOL)isEditingHandlesHidden;
 @end
+
 
 @protocol ZDStickerViewDelegate <NSObject>
 @required
@@ -55,5 +56,3 @@ typedef enum {
 #endif
 - (void)stickerViewDidCustomButtonTap:(ZDStickerView *)sticker;
 @end
-
-
