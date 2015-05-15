@@ -1,4 +1,4 @@
-# ZDStickerView [![Donate on Gittip](http://badgr.co/gittip/zedoul.png)](https://www.gittip.com/zedoul/)
+# ZDStickerView 
 
 ZDStickerView is an Objective-C module for iOS and offers complete configurability, including movement, resizing, rotation and more, with one finger.
 
@@ -19,7 +19,11 @@ You'll need to #import the ZDStickerView.h header and construct a new instance o
 For an example of how to use ZDStickerView, please see the included example project.
 
 ### Features
-Longpress event is disabled by default. If you want enable it, just put #define ZDSTICKERVIEW_LONGPRESS in .pch file.
+Longpress event is disabled by default. If you want enable it, just define it in .pch file follows: 
+
+```c
+    #define ZDSTICKERVIEW_LONGPRESS
+```
 
 ### Credits
 
