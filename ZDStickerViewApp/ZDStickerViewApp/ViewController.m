@@ -35,9 +35,10 @@
     
     ZDStickerView *userResizableView1 = [[ZDStickerView alloc] initWithFrame:gripFrame1];
     userResizableView1.tag = 0;
-    userResizableView1.delegate = self;
+    userResizableView1.stickerViewDelegate = self;
     userResizableView1.contentView = contentView;//contentView;
     userResizableView1.preventsPositionOutsideSuperview = NO;
+    userResizableView1.translucencySticker = NO;
     [userResizableView1 showEditingHandles];
     [self.view addSubview:userResizableView1];
     
@@ -46,7 +47,7 @@
     textView.text = @"ZDStickerView is Objective-C module for iOS and offer complete configurability, including movement, resizing, rotation and more, with one finger.";
     ZDStickerView *userResizableView2 = [[ZDStickerView alloc] initWithFrame:gripFrame2];
     userResizableView2.tag = 1;
-    userResizableView2.delegate = self;
+    userResizableView2.stickerViewDelegate = self;
     userResizableView2.contentView = textView;
     userResizableView2.preventsPositionOutsideSuperview = NO;
     userResizableView2.preventsCustomButton = NO;
@@ -55,6 +56,27 @@
     userResizableView2.preventsResizing = YES;
     [userResizableView2 showEditingHandles];
     [self.view addSubview:userResizableView2];
+    
+    
+    CGRect gripFrame3 = CGRectMake(50, 100, 100, 50);
+    UITextView *textView2 = [[UITextView alloc] initWithFrame:gripFrame3];
+    textView2.text = @"Prevented within\nSuperview";
+    textView2.backgroundColor = [UIColor clearColor];
+    textView2.editable = NO;
+    //textView2.delegate = self;
+    textView2.textColor = [UIColor greenColor];
+    
+    ZDStickerView *userResizableView = [[ZDStickerView alloc] initWithFrame:gripFrame3];
+    userResizableView.tag = 1;
+    userResizableView.stickerViewDelegate = self;
+    userResizableView.contentView = textView2;
+    userResizableView.preventsPositionOutsideSuperview = YES;
+    userResizableView.preventsCustomButton = NO;
+    [userResizableView setButton:ZDSTICKERVIEW_BUTTON_CUSTOM
+                           image:[UIImage imageNamed:@"Write.png"]];
+    userResizableView.preventsResizing = NO;
+    [userResizableView showEditingHandles];
+    [userResizableView2 addSubview:userResizableView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -67,17 +89,17 @@
 
 - (void)stickerViewDidLongPressed:(ZDStickerView *)sticker
 {
-    NSLog(@"%s [%d]",__func__, sticker.tag);
+    NSLog(@"%s [%zd]",__func__, sticker.tag);
 }
 
 - (void)stickerViewDidClose:(ZDStickerView *)sticker
 {
-    NSLog(@"%s [%d]",__func__, sticker.tag);
+    NSLog(@"%s [%zd]",__func__, sticker.tag);
 }
 
 - (void)stickerViewDidCustomButtonTap:(ZDStickerView *)sticker
 {
-    NSLog(@"%s [%d]",__func__, sticker.tag);
+    NSLog(@"%s [%zd]",__func__, sticker.tag);
     [((UITextView*)sticker.contentView) becomeFirstResponder];
 }
 
