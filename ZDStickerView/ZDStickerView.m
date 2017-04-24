@@ -90,6 +90,10 @@
 }
 
 
+- (void)pinchTranslate:(UIPinchGestureRecognizer *)recognizer {
+    recognizer.view.transform = CGAffineTransformScale(recognizer.view.transform, recognizer.scale, recognizer.scale);
+    recognizer.scale = 1;
+}
 
 - (void)resizeTranslate:(UIPanGestureRecognizer *)recognizer
 {
@@ -241,6 +245,13 @@
     self.customControl.backgroundColor = [UIColor clearColor];
     self.customControl.userInteractionEnabled = YES;
     self.customControl.image = nil;
+    
+    
+    UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc]
+                                              initWithTarget:self
+                                              action:@selector(pinchTranslate:)];
+    [self addGestureRecognizer:pinchGesture];
+    
     UITapGestureRecognizer *customTapGesture = [[UITapGestureRecognizer alloc]
                                                 initWithTarget:self
                                                         action:@selector(customTap:)];
