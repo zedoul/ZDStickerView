@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		621152441EFC34DE0051EE93 /* ZDStickerView.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 621152431EFC34DE0051EE93 /* ZDStickerView.podspec */; };
 		7C1845951796D10600934B33 /* sampleImage1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7C1845931796D10600934B33 /* sampleImage1.jpg */; };
 		7C1845961796D10600934B33 /* sampleImage2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C1845941796D10600934B33 /* sampleImage2.png */; };
 		7C5C39C51755B15100803C08 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5C39C41755B15100803C08 /* UIKit.framework */; };
@@ -22,12 +23,12 @@
 		7C5C39E11755B15100803C08 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5C39E01755B15100803C08 /* ViewController.m */; };
 		7C5C39EB1755B4FC00803C08 /* ZDStickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5C39EA1755B4FC00803C08 /* ZDStickerView.m */; };
 		7C5C39F01755BCBA00803C08 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C5C39EF1755BCBA00803C08 /* QuartzCore.framework */; };
-		7C5E6B2017AD57B700320DE7 /* ZDStickerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7C5E6B1F17AD57B700320DE7 /* ZDStickerView.bundle */; };
 		7C88BF951797ABDD008EA110 /* Write.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C88BF941797ABDD008EA110 /* Write.png */; };
 		7CA7D584175C3DEB00C70BE6 /* SPGripViewBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CA7D583175C3DEB00C70BE6 /* SPGripViewBorderView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		621152431EFC34DE0051EE93 /* ZDStickerView.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ZDStickerView.podspec; path = ../ZDStickerView.podspec; sourceTree = "<group>"; };
 		7C1845931796D10600934B33 /* sampleImage1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sampleImage1.jpg; sourceTree = SOURCE_ROOT; };
 		7C1845941796D10600934B33 /* sampleImage2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sampleImage2.png; sourceTree = SOURCE_ROOT; };
 		7C5C39C11755B15100803C08 /* ZDStickerViewApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZDStickerViewApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,7 +50,6 @@
 		7C5C39E91755B4FC00803C08 /* ZDStickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZDStickerView.h; sourceTree = "<group>"; };
 		7C5C39EA1755B4FC00803C08 /* ZDStickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZDStickerView.m; sourceTree = "<group>"; };
 		7C5C39EF1755BCBA00803C08 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		7C5E6B1F17AD57B700320DE7 /* ZDStickerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZDStickerView.bundle; sourceTree = "<group>"; };
 		7C88BF941797ABDD008EA110 /* Write.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Write.png; sourceTree = SOURCE_ROOT; };
 		7CA7D582175C3DEB00C70BE6 /* SPGripViewBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPGripViewBorderView.h; sourceTree = "<group>"; };
 		7CA7D583175C3DEB00C70BE6 /* SPGripViewBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPGripViewBorderView.m; sourceTree = "<group>"; };
@@ -77,6 +77,7 @@
 				7C5C39CA1755B15100803C08 /* ZDStickerViewApp */,
 				7C5C39C31755B15100803C08 /* Frameworks */,
 				7C5C39C21755B15100803C08 /* Products */,
+				621152431EFC34DE0051EE93 /* ZDStickerView.podspec */,
 			);
 			sourceTree = "<group>";
 		};
@@ -136,7 +137,6 @@
 				7C5C39EA1755B4FC00803C08 /* ZDStickerView.m */,
 				7CA7D582175C3DEB00C70BE6 /* SPGripViewBorderView.h */,
 				7CA7D583175C3DEB00C70BE6 /* SPGripViewBorderView.m */,
-				7C5E6B1F17AD57B700320DE7 /* ZDStickerView.bundle */,
 			);
 			name = ZDStickerView;
 			path = ../ZDStickerView;
@@ -200,8 +200,8 @@
 				7C5C39DE1755B15100803C08 /* MainStoryboard.storyboard in Resources */,
 				7C1845951796D10600934B33 /* sampleImage1.jpg in Resources */,
 				7C1845961796D10600934B33 /* sampleImage2.png in Resources */,
+				621152441EFC34DE0051EE93 /* ZDStickerView.podspec in Resources */,
 				7C88BF951797ABDD008EA110 /* Write.png in Resources */,
-				7C5E6B2017AD57B700320DE7 /* ZDStickerView.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
