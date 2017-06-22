@@ -21,17 +21,26 @@ typedef enum {
 
 @interface ZDStickerView : UIView
 
-@property (nonatomic, strong) UIView *contentView;
+@property (nonatomic, strong, nullable) UIView *contentView;
 
 @property (nonatomic) BOOL preventsPositionOutsideSuperview;    // default = YES
 @property (nonatomic) BOOL preventsResizing;                    // default = NO
 @property (nonatomic) BOOL preventsDeleting;                    // default = NO
 @property (nonatomic) BOOL preventsCustomButton;                // default = YES
 @property (nonatomic) BOOL translucencySticker;                // default = YES
+@property (nonatomic) BOOL isLongPressedEnable;
+@property (nonatomic) BOOL isSingleTapEnable;
 @property (nonatomic) CGFloat minWidth;
 @property (nonatomic) CGFloat minHeight;
 
 @property (weak, nonatomic) id <ZDStickerViewDelegate> stickerViewDelegate;
+
+@property (nonatomic, copy, nullable) void (^singleTapBlock)(ZDStickerView * _Nonnull sticker);
+@property (nonatomic, copy, nullable) void (^customButtonTapBlock)(ZDStickerView * _Nonnull sticker);
+@property (nonatomic, copy, nullable) void (^didBeginEditingBlock)(ZDStickerView * _Nonnull sticker);
+@property (nonatomic, copy, nullable) void (^didEndEditingBlock)(ZDStickerView * _Nonnull sticker);
+@property (nonatomic, copy, nullable) void (^didCancelEditingBlock)(ZDStickerView * _Nonnull sticker);
+@property (nonatomic, copy, nullable) void (^didCloseBlock)(ZDStickerView * _Nonnull sticker);
 
 - (void)hideDelHandle;
 - (void)showDelHandle;
@@ -39,7 +48,7 @@ typedef enum {
 - (void)showEditingHandles;
 - (void)showCustomHandle;
 - (void)hideCustomHandle;
-- (void)setButton:(ZDSTICKERVIEW_BUTTONS)type image:(UIImage *)image;
+- (void)setButton:(ZDSTICKERVIEW_BUTTONS)type image:(UIImage *_Nullable)image;
 - (BOOL)isEditingHandlesHidden;
 @end
 
@@ -47,12 +56,11 @@ typedef enum {
 @protocol ZDStickerViewDelegate <NSObject>
 @required
 @optional
-- (void)stickerViewDidBeginEditing:(ZDStickerView *)sticker;
-- (void)stickerViewDidEndEditing:(ZDStickerView *)sticker;
-- (void)stickerViewDidCancelEditing:(ZDStickerView *)sticker;
-- (void)stickerViewDidClose:(ZDStickerView *)sticker;
-#ifdef ZDSTICKERVIEW_LONGPRESS
-- (void)stickerViewDidLongPressed:(ZDStickerView *)sticker;
-#endif
-- (void)stickerViewDidCustomButtonTap:(ZDStickerView *)sticker;
+- (void)stickerViewDidBeginEditing:(ZDStickerView *_Nonnull)sticker;
+- (void)stickerViewDidEndEditing:(ZDStickerView *_Nonnull)sticker;
+- (void)stickerViewDidCancelEditing:(ZDStickerView *_Nonnull)sticker;
+- (void)stickerViewDidClose:(ZDStickerView *_Nonnull)sticker;
+- (void)stickerViewDidSingleTap:(ZDStickerView *_Nonnull)sticker;
+- (void)stickerViewDidLongPressed:(ZDStickerView *_Nonnull)sticker;
+- (void)stickerViewDidCustomButtonTap:(ZDStickerView *_Nonnull)sticker;
 @end

@@ -16,7 +16,6 @@
 #define kZDStickerViewControlSize 36.0
 
 
-
 @interface ZDStickerView ()
 
 @property (nonatomic, strong) SPGripViewBorderView *borderView;
@@ -48,10 +47,21 @@
    }
  */
 
-#ifdef ZDSTICKERVIEW_LONGPRESS
+- (void)tap:(UITapGestureRecognizer *)recognizer {
+    if (recognizer.state == UIGestureRecognizerStateEnded && self.isSingleTapEnable)
+    {
+        if(self.singleTapBlock) {
+            self.singleTapBlock(self);
+        }
+        if ([self.stickerViewDelegate respondsToSelector:@selector(stickerViewDidSingleTap:)])
+        {
+            [self.stickerViewDelegate stickerViewDidSingleTap:self];
+        }
+    }
+}
 - (void)longPress:(UIPanGestureRecognizer *)recognizer
 {
-    if (recognizer.state == UIGestureRecognizerStateBegan)
+    if (recognizer.state == UIGestureRecognizerStateBegan && self.isLongPressedEnable)
     {
         if ([self.stickerViewDelegate respondsToSelector:@selector(stickerViewDidLongPressed:)])
         {
@@ -59,11 +69,13 @@
         }
     }
 }
-#endif
 
 
-- (void)singleTap:(UIPanGestureRecognizer *)recognizer
+- (void)deleteTap:(UIPanGestureRecognizer *)recognizer
 {
+    if (self.didCloseBlock) {
+        self.didCloseBlock(self);
+    }
     if ([self.stickerViewDelegate respondsToSelector:@selector(stickerViewDidClose:)])
     {
         [self.stickerViewDelegate stickerViewDidClose:self];
@@ -80,8 +92,11 @@
 
 - (void)customTap:(UIPanGestureRecognizer *)recognizer
 {
-    if (NO == self.preventsCustomButton)
+    if (NO == self.preventsCustomButton && recognizer.state == UIGestureRecognizerStateEnded)
     {
+        if(self.customButtonTapBlock) {
+            self.customButtonTapBlock(self);
+        }
         if ([self.stickerViewDelegate respondsToSelector:@selector(stickerViewDidCustomButtonTap:)])
         {
             [self.stickerViewDelegate stickerViewDidCustomButtonTap:self];
@@ -90,10 +105,6 @@
 }
 
 
-- (void)pinchTranslate:(UIPinchGestureRecognizer *)recognizer {
-    recognizer.view.transform = CGAffineTransformScale(recognizer.view.transform, recognizer.scale, recognizer.scale);
-    recognizer.scale = 1;
-}
 
 - (void)resizeTranslate:(UIPanGestureRecognizer *)recognizer
 {
@@ -208,23 +219,27 @@
     self.preventsDeleting = NO;
     self.preventsCustomButton = YES;
     self.translucencySticker = YES;
-
-#ifdef ZDSTICKERVIEW_LONGPRESS
+    self.isLongPressedEnable = NO;
+    self.isSingleTapEnable = NO;
     UILongPressGestureRecognizer*longpress = [[UILongPressGestureRecognizer alloc]
                                               initWithTarget:self
-                                                      action:@selector(longPress:)];
+                                              action:@selector(longPress:)];
     [self addGestureRecognizer:longpress];
-#endif
+    UITapGestureRecognizer*tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
+    [self addGestureRecognizer:tap];
+    
+    NSBundle *bundle = [NSBundle bundleWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"ZDStickerView"
+                                                                                                 ofType:@"bundle"]];
 
     self.deleteControl = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0,
                                                                       kZDStickerViewControlSize, kZDStickerViewControlSize)];
     self.deleteControl.backgroundColor = [UIColor clearColor];
-    self.deleteControl.image = [UIImage imageNamed:@"ZDStickerView.bundle/ZDBtn3.png"];
+    self.deleteControl.image = [UIImage imageNamed:@"ZDBtn3" inBundle:bundle compatibleWithTraitCollection:nil];
     self.deleteControl.userInteractionEnabled = YES;
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc]
+    UITapGestureRecognizer *deleteTap = [[UITapGestureRecognizer alloc]
                                          initWithTarget:self
-                                                 action:@selector(singleTap:)];
-    [self.deleteControl addGestureRecognizer:singleTap];
+                                                 action:@selector(deleteTap:)];
+    [self.deleteControl addGestureRecognizer:deleteTap];
     [self addSubview:self.deleteControl];
 
     self.resizingControl = [[UIImageView alloc]initWithFrame:CGRectMake(self.frame.size.width-kZDStickerViewControlSize,
@@ -232,7 +247,7 @@
                                                                         kZDStickerViewControlSize, kZDStickerViewControlSize)];
     self.resizingControl.backgroundColor = [UIColor clearColor];
     self.resizingControl.userInteractionEnabled = YES;
-    self.resizingControl.image = [UIImage imageNamed:@"ZDStickerView.bundle/ZDBtn2.png.png"];
+    self.resizingControl.image = [UIImage imageNamed:@"ZDBtn2" inBundle:bundle compatibleWithTraitCollection:nil];
     UIPanGestureRecognizer*panResizeGesture = [[UIPanGestureRecognizer alloc]
                                                initWithTarget:self
                                                        action:@selector(resizeTranslate:)];
@@ -245,13 +260,6 @@
     self.customControl.backgroundColor = [UIColor clearColor];
     self.customControl.userInteractionEnabled = YES;
     self.customControl.image = nil;
-    
-    
-    UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc]
-                                              initWithTarget:self
-                                              action:@selector(pinchTranslate:)];
-    [self addGestureRecognizer:pinchGesture];
-    
     UITapGestureRecognizer *customTapGesture = [[UITapGestureRecognizer alloc]
                                                 initWithTarget:self
                                                         action:@selector(customTap:)];
@@ -369,6 +377,9 @@
 
     UITouch *touch = [touches anyObject];
     self.touchStart = [touch locationInView:self.superview];
+    if (self.didBeginEditingBlock) {
+        self.didBeginEditingBlock(self);
+    }
     if ([self.stickerViewDelegate respondsToSelector:@selector(stickerViewDidBeginEditing:)])
     {
         [self.stickerViewDelegate stickerViewDidBeginEditing:self];
@@ -382,6 +393,9 @@
     [self enableTransluceny:NO];
 
     // Notify the delegate we've ended our editing session.
+    if (self.didEndEditingBlock) {
+        self.didEndEditingBlock(self);
+    }
     if ([self.stickerViewDelegate respondsToSelector:@selector(stickerViewDidEndEditing:)])
     {
         [self.stickerViewDelegate stickerViewDidEndEditing:self];
@@ -395,6 +409,9 @@
     [self enableTransluceny:NO];
 
     // Notify the delegate we've ended our editing session.
+    if (self.didCancelEditingBlock) {
+        self.didCancelEditingBlock(self);
+    }
     if ([self.stickerViewDelegate respondsToSelector:@selector(stickerViewDidCancelEditing:)])
     {
         [self.stickerViewDelegate stickerViewDidCancelEditing:self];
