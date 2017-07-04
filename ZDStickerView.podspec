@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ZDStickerView'
-  s.version          = '0.1.18.1'
+  s.version          = '0.1.18.2'
   s.summary          = 'ZDStickerView is ObjC module for iOS and offers complete configurability, including movement, resizing, rotation and more, with one finger.'
   s.description      = 'ZDStickerView is ObjC module for iOS and offers complete configurability, including movement, resizing, rotation and more, with one finger.'
 
