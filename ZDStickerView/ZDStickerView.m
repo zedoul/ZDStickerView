@@ -153,6 +153,14 @@
                 self.prevPoint = [recognizer locationOfTouch:0 inView:self];
                 return;
             }
+            
+            if (self.preventsResizingOutsideSuperview)
+            {
+                if(self.bounds.size.width + (wChange)> self.superview.bounds.size.width ||
+                   self.bounds.size.height + (hChange)> self.superview.bounds.size.height) {
+                    return;
+                }
+            }
 
             self.bounds = CGRectMake(self.bounds.origin.x, self.bounds.origin.y,
                                      self.bounds.size.width + (wChange),
@@ -214,6 +222,7 @@
     }
 
     self.preventsPositionOutsideSuperview = YES;
+    self.preventsResizingOutsideSuperview = YES;
     self.preventsLayoutWhileResizing = YES;
     self.preventsResizing = NO;
     self.preventsDeleting = NO;

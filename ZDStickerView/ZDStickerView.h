@@ -24,6 +24,7 @@ typedef enum {
 @property (nonatomic, strong, nullable) UIView *contentView;
 
 @property (nonatomic) BOOL preventsPositionOutsideSuperview;    // default = YES
+@property (nonatomic) BOOL preventsResizingOutsideSuperview;    // default = YES
 @property (nonatomic) BOOL preventsResizing;                    // default = NO
 @property (nonatomic) BOOL preventsDeleting;                    // default = NO
 @property (nonatomic) BOOL preventsCustomButton;                // default = YES
