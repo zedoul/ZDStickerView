@@ -193,6 +193,7 @@
 - (void)setupDefaultAttributes
 {
     self.borderView = [[SPGripViewBorderView alloc] initWithFrame:CGRectInset(self.bounds, kSPUserResizableViewGlobalInset, kSPUserResizableViewGlobalInset)];
+    self.borderView.borderColor = self.borderColor;
     [self.borderView setHidden:YES];
     [self addSubview:self.borderView];
 
@@ -589,6 +590,14 @@
             self.alpha = 1.0;
         }
     }
+}
+
+- (UIColor *)borderColor {
+    return self.borderView.borderColor;
+}
+
+-(void)setBorderColor:(UIColor *)borderColor {
+    self.borderView.borderColor = borderColor;
 }
 
 

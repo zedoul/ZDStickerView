@@ -10,4 +10,6 @@
 
 @interface SPGripViewBorderView : UIView
 
+@property (nonatomic) UIColor *borderColor;
+
 @end

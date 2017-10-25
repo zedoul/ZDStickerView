@@ -49,6 +49,7 @@
     userResizableView2.tag = 1;
     userResizableView2.stickerViewDelegate = self;
     userResizableView2.contentView = textView;
+    userResizableView2.borderColor = [UIColor greenColor];
     userResizableView2.preventsPositionOutsideSuperview = NO;
     userResizableView2.preventsCustomButton = NO;
     [userResizableView2 setButton:ZDStickerViewButtonCustom
