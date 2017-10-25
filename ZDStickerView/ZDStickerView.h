@@ -32,6 +32,8 @@ typedef NS_ENUM(NSUInteger, ZDStickerViewButton) {
 @property (nonatomic) BOOL allowPinchToZoom;
 /// Allows the user to rotate the sticker by using 2 finger rotation on the view. Defaults to true.
 @property (nonatomic) BOOL allowRotationGesture;
+/// Allows the user drag the sticker view around.
+@property (nonatomic) BOOL allowDragging;
 /// Defines the color of the border drawn around the content view. Defaults to gray.
 @property (nonatomic) UIColor *borderColor;
 @property (nonatomic) CGFloat minWidth;

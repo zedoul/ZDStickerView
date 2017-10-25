@@ -216,6 +216,7 @@
     self.translucencySticker = YES;
     self.allowPinchToZoom = YES;
     self.allowRotationGesture = YES;
+    self.allowDragging = YES;
 
 #ifdef ZDSTICKERVIEW_LONGPRESS
     UILongPressGestureRecognizer*longpress = [[UILongPressGestureRecognizer alloc]
@@ -376,7 +377,7 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if ([self isEditingHandlesHidden])
+    if (!self.allowDragging)
     {
         return;
     }
@@ -457,7 +458,7 @@
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if ([self isEditingHandlesHidden])
+    if (!self.allowDragging)
     {
         return;
     }
