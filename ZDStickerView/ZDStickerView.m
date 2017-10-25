@@ -95,6 +95,11 @@
     recognizer.scale = 1;
 }
 
+- (void)rotateTranslate:(UIRotationGestureRecognizer *)recognizer {
+    recognizer.view.transform = CGAffineTransformRotate(recognizer.view.transform, recognizer.rotation);
+    recognizer.rotation = 0;
+}
+
 - (void)resizeTranslate:(UIPanGestureRecognizer *)recognizer
 {
     if ([recognizer state] == UIGestureRecognizerStateBegan)
@@ -208,6 +213,8 @@
     self.preventsDeleting = NO;
     self.preventsCustomButton = YES;
     self.translucencySticker = YES;
+    self.allowPinchToZoom = YES;
+    self.allowRotationGesture = YES;
 
 #ifdef ZDSTICKERVIEW_LONGPRESS
     UILongPressGestureRecognizer*longpress = [[UILongPressGestureRecognizer alloc]
@@ -246,11 +253,19 @@
     self.customControl.userInteractionEnabled = YES;
     self.customControl.image = nil;
     
+    if (self.allowPinchToZoom) {
+        UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc]
+                                                  initWithTarget:self
+                                                  action:@selector(pinchTranslate:)];
+        [self addGestureRecognizer:pinchGesture];
+    }
     
-    UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc]
-                                              initWithTarget:self
-                                              action:@selector(pinchTranslate:)];
-    [self addGestureRecognizer:pinchGesture];
+    if (self.allowRotationGesture) {
+        UIRotationGestureRecognizer *rotationGesture = [[UIRotationGestureRecognizer alloc]
+                                                        initWithTarget:self
+                                                        action:@selector(rotateTranslate:)];
+        [self addGestureRecognizer:rotationGesture];
+    }
     
     UITapGestureRecognizer *customTapGesture = [[UITapGestureRecognizer alloc]
                                                 initWithTarget:self

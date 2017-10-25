@@ -27,7 +27,11 @@ typedef NS_ENUM(NSUInteger, ZDStickerViewButton) {
 @property (nonatomic) BOOL preventsResizing;                    // default = NO
 @property (nonatomic) BOOL preventsDeleting;                    // default = NO
 @property (nonatomic) BOOL preventsCustomButton;                // default = YES
-@property (nonatomic) BOOL translucencySticker;                // default = YES
+@property (nonatomic) BOOL translucencySticker;                 // default = YES
+/// Allows user to zoom the sticker by pinching on the sticker view. Defaults to true.
+@property (nonatomic) BOOL allowPinchToZoom;
+/// Allows the user to rotate the sticker by using 2 finger rotation on the view. Defaults to true.
+@property (nonatomic) BOOL allowRotationGesture;
 @property (nonatomic) CGFloat minWidth;
 @property (nonatomic) CGFloat minHeight;
 
