@@ -8,13 +8,13 @@
 #import <UIKit/UIKit.h>
 
 
-typedef enum {
-    ZDSTICKERVIEW_BUTTON_NULL,
-    ZDSTICKERVIEW_BUTTON_DEL,
-    ZDSTICKERVIEW_BUTTON_RESIZE,
-    ZDSTICKERVIEW_BUTTON_CUSTOM,
-    ZDSTICKERVIEW_BUTTON_MAX
-} ZDSTICKERVIEW_BUTTONS;
+typedef NS_ENUM(NSUInteger, ZDStickerViewButton) {
+    ZDStickerViewButtonNull,
+    ZDStickerViewButtonDel,
+    ZDStickerViewButtonResize,
+    ZDStickerViewButtonCustom,
+    ZDStickerViewButtonMax
+};
 
 @protocol ZDStickerViewDelegate;
 
@@ -39,7 +39,7 @@ typedef enum {
 - (void)showEditingHandles;
 - (void)showCustomHandle;
 - (void)hideCustomHandle;
-- (void)setButton:(ZDSTICKERVIEW_BUTTONS)type image:(UIImage *)image;
+- (void)setButton:(ZDStickerViewButton)type image:(UIImage *)image;
 - (BOOL)isEditingHandlesHidden;
 @end
 

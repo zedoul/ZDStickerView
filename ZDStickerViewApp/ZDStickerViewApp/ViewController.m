@@ -51,7 +51,7 @@
     userResizableView2.contentView = textView;
     userResizableView2.preventsPositionOutsideSuperview = NO;
     userResizableView2.preventsCustomButton = NO;
-    [userResizableView2 setButton:ZDSTICKERVIEW_BUTTON_CUSTOM
+    [userResizableView2 setButton:ZDStickerViewButtonCustom
                             image:[UIImage imageNamed:@"Write.png"]];
     userResizableView2.preventsResizing = YES;
     [userResizableView2 showEditingHandles];
@@ -72,7 +72,7 @@
     userResizableView.contentView = textView2;
     userResizableView.preventsPositionOutsideSuperview = YES;
     userResizableView.preventsCustomButton = NO;
-    [userResizableView setButton:ZDSTICKERVIEW_BUTTON_CUSTOM
+    [userResizableView setButton:ZDStickerViewButtonCustom
                            image:[UIImage imageNamed:@"Write.png"]];
     userResizableView.preventsResizing = NO;
     [userResizableView showEditingHandles];

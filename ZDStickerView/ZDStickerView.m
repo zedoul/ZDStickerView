@@ -533,17 +533,17 @@
 
 
 
-- (void)setButton:(ZDSTICKERVIEW_BUTTONS)type image:(UIImage*)image
+- (void)setButton:(ZDStickerViewButton)type image:(UIImage*)image
 {
     switch (type)
     {
-        case ZDSTICKERVIEW_BUTTON_RESIZE:
+        case ZDStickerViewButtonResize:
             self.resizingControl.image = image;
             break;
-        case ZDSTICKERVIEW_BUTTON_DEL:
+        case ZDStickerViewButtonDel:
             self.deleteControl.image = image;
             break;
-        case ZDSTICKERVIEW_BUTTON_CUSTOM:
+        case ZDStickerViewButtonCustom:
             self.customControl.image = image;
             break;
 
