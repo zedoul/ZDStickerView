@@ -36,6 +36,8 @@ typedef NS_ENUM(NSUInteger, ZDStickerViewButton) {
 @property (nonatomic) BOOL allowDragging;
 /// Defines the color of the border drawn around the content view. Defaults to gray.
 @property (nonatomic) UIColor *borderColor;
+/// Defines the width of the border drawn around the sticker view.
+@property (nonatomic) CGFloat borderWidth;
 @property (nonatomic) CGFloat minWidth;
 @property (nonatomic) CGFloat minHeight;
 
