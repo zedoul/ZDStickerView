@@ -19,6 +19,8 @@
     if ((self = [super initWithFrame:frame])) {
         // Clear background to ensure the content view shows through.
         self.backgroundColor = [UIColor clearColor];
+        self.borderColor = [UIColor grayColor];
+        self.borderWidth = 1.f;
     }
     return self;
 }
@@ -27,8 +29,8 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
     
-    CGContextSetLineWidth(context, 1.0);
-    CGContextSetStrokeColorWithColor(context, [UIColor grayColor].CGColor);
+    CGContextSetLineWidth(context, self.borderWidth);
+    CGContextSetStrokeColorWithColor(context, self.borderColor.CGColor);
     CGContextAddRect(context, CGRectInset(self.bounds, kSPUserResizableViewInteractiveBorderSize/2, kSPUserResizableViewInteractiveBorderSize/2));
     CGContextStrokePath(context);
     

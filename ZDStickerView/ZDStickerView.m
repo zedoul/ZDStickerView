@@ -95,6 +95,11 @@
     recognizer.scale = 1;
 }
 
+- (void)rotateTranslate:(UIRotationGestureRecognizer *)recognizer {
+    recognizer.view.transform = CGAffineTransformRotate(recognizer.view.transform, recognizer.rotation);
+    recognizer.rotation = 0;
+}
+
 - (void)resizeTranslate:(UIPanGestureRecognizer *)recognizer
 {
     if ([recognizer state] == UIGestureRecognizerStateBegan)
@@ -188,6 +193,8 @@
 - (void)setupDefaultAttributes
 {
     self.borderView = [[SPGripViewBorderView alloc] initWithFrame:CGRectInset(self.bounds, kSPUserResizableViewGlobalInset, kSPUserResizableViewGlobalInset)];
+    self.borderView.borderColor = self.borderColor;
+    self.borderView.borderWidth = self.borderWidth;
     [self.borderView setHidden:YES];
     [self addSubview:self.borderView];
 
@@ -208,6 +215,9 @@
     self.preventsDeleting = NO;
     self.preventsCustomButton = YES;
     self.translucencySticker = YES;
+    self.allowPinchToZoom = YES;
+    self.allowRotationGesture = YES;
+    self.allowDragging = YES;
 
 #ifdef ZDSTICKERVIEW_LONGPRESS
     UILongPressGestureRecognizer*longpress = [[UILongPressGestureRecognizer alloc]
@@ -246,11 +256,19 @@
     self.customControl.userInteractionEnabled = YES;
     self.customControl.image = nil;
     
+    if (self.allowPinchToZoom) {
+        UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc]
+                                                  initWithTarget:self
+                                                  action:@selector(pinchTranslate:)];
+        [self addGestureRecognizer:pinchGesture];
+    }
     
-    UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc]
-                                              initWithTarget:self
-                                              action:@selector(pinchTranslate:)];
-    [self addGestureRecognizer:pinchGesture];
+    if (self.allowRotationGesture) {
+        UIRotationGestureRecognizer *rotationGesture = [[UIRotationGestureRecognizer alloc]
+                                                        initWithTarget:self
+                                                        action:@selector(rotateTranslate:)];
+        [self addGestureRecognizer:rotationGesture];
+    }
     
     UITapGestureRecognizer *customTapGesture = [[UITapGestureRecognizer alloc]
                                                 initWithTarget:self
@@ -360,7 +378,7 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if ([self isEditingHandlesHidden])
+    if (!self.allowDragging)
     {
         return;
     }
@@ -441,7 +459,7 @@
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if ([self isEditingHandlesHidden])
+    if (!self.allowDragging)
     {
         return;
     }
@@ -533,17 +551,17 @@
 
 
 
-- (void)setButton:(ZDSTICKERVIEW_BUTTONS)type image:(UIImage*)image
+- (void)setButton:(ZDStickerViewButton)type image:(UIImage*)image
 {
     switch (type)
     {
-        case ZDSTICKERVIEW_BUTTON_RESIZE:
+        case ZDStickerViewButtonResize:
             self.resizingControl.image = image;
             break;
-        case ZDSTICKERVIEW_BUTTON_DEL:
+        case ZDStickerViewButtonDel:
             self.deleteControl.image = image;
             break;
-        case ZDSTICKERVIEW_BUTTON_CUSTOM:
+        case ZDStickerViewButtonCustom:
             self.customControl.image = image;
             break;
 
@@ -576,6 +594,21 @@
     }
 }
 
+- (UIColor *)borderColor {
+    return self.borderView.borderColor;
+}
+
+- (void)setBorderColor:(UIColor *)borderColor {
+    self.borderView.borderColor = borderColor;
+}
+
+- (CGFloat)borderWidth {
+    return self.borderView.borderWidth;
+}
+
+- (void)setBorderWidth:(CGFloat)borderWidth {
+    self.borderView.borderWidth = borderWidth;
+}
 
 
 @end
