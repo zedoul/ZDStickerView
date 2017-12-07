@@ -107,6 +107,11 @@
         [self enableTransluceny:YES];
         self.prevPoint = [recognizer locationInView:self];
         [self setNeedsDisplay];
+        
+        // Inform delegate.
+        if ([self.stickerViewDelegate respondsToSelector:@selector(stickerViewDidBeginEditing:)]) {
+            [self.stickerViewDelegate stickerViewDidBeginEditing:self];
+        }
     }
     else if ([recognizer state] == UIGestureRecognizerStateChanged)
     {
@@ -185,6 +190,18 @@
         [self enableTransluceny:NO];
         self.prevPoint = [recognizer locationInView:self];
         [self setNeedsDisplay];
+        
+        // Inform delegate.
+        if ([self.stickerViewDelegate respondsToSelector:@selector(stickerViewDidEndEditing:)]) {
+            [self.stickerViewDelegate stickerViewDidEndEditing:self];
+        }
+    }
+    else if ([recognizer state] == UIGestureRecognizerStateCancelled)
+    {
+        // Inform delegate.
+        if ([self.stickerViewDelegate respondsToSelector:@selector(stickerViewDidCancelEditing:)]) {
+            [self.stickerViewDelegate stickerViewDidCancelEditing:self];
+        }
     }
 }
 
