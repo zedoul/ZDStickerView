@@ -25,6 +25,9 @@
 @property (strong, nonatomic) UIImageView *deleteControl;
 @property (strong, nonatomic) UIImageView *customControl;
 
+@property (strong, nonatomic) UIPinchGestureRecognizer *pinchRecognizer;
+@property (strong, nonatomic) UIRotationGestureRecognizer *rotationRecognizer;
+
 @property (nonatomic) BOOL preventsLayoutWhileResizing;
 
 @property (nonatomic) CGFloat deltaAngle;
@@ -232,8 +235,6 @@
     self.preventsDeleting = NO;
     self.preventsCustomButton = YES;
     self.translucencySticker = YES;
-    self.allowPinchToZoom = YES;
-    self.allowRotationGesture = YES;
     self.allowDragging = YES;
 
 #ifdef ZDSTICKERVIEW_LONGPRESS
@@ -273,23 +274,22 @@
     self.customControl.userInteractionEnabled = YES;
     self.customControl.image = nil;
     
-    if (self.allowPinchToZoom) {
-        UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc]
-                                                  initWithTarget:self
-                                                  action:@selector(pinchTranslate:)];
-        [self addGestureRecognizer:pinchGesture];
-    }
+    // Add pinch gesture recognizer.
+    self.pinchRecognizer = [[UIPinchGestureRecognizer alloc]
+                            initWithTarget:self
+                            action:@selector(pinchTranslate:)];
+    [self addGestureRecognizer:self.pinchRecognizer];
     
-    if (self.allowRotationGesture) {
-        UIRotationGestureRecognizer *rotationGesture = [[UIRotationGestureRecognizer alloc]
-                                                        initWithTarget:self
-                                                        action:@selector(rotateTranslate:)];
-        [self addGestureRecognizer:rotationGesture];
-    }
+    // Add rotation recognizer.
+    self.rotationRecognizer = [[UIRotationGestureRecognizer alloc]
+                               initWithTarget:self
+                               action:@selector(rotateTranslate:)];
+    [self addGestureRecognizer:self.rotationRecognizer];
     
+    // Add custom control recognizer.
     UITapGestureRecognizer *customTapGesture = [[UITapGestureRecognizer alloc]
                                                 initWithTarget:self
-                                                        action:@selector(customTap:)];
+                                                action:@selector(customTap:)];
     [self.customControl addGestureRecognizer:customTapGesture];
     [self addSubview:self.customControl];
 
@@ -494,7 +494,7 @@
     self.touchStart = touch;
 }
 
-
+#pragma mark - Property setter and getter
 
 - (void)hideDelHandle
 {
@@ -625,6 +625,22 @@
 
 - (void)setBorderWidth:(CGFloat)borderWidth {
     self.borderView.borderWidth = borderWidth;
+}
+
+- (BOOL)allowPinchToZoom {
+    return self.pinchRecognizer.isEnabled;
+}
+
+- (void)setAllowPinchToZoom:(BOOL)allowPinchToZoom {
+    self.pinchRecognizer.enabled = allowPinchToZoom;
+}
+
+- (BOOL)allowRotationGesture {
+    return self.rotationRecognizer.isEnabled;
+}
+
+-(void)setAllowRotationGesture:(BOOL)allowRotationGesture {
+    self.rotationRecognizer.enabled = allowRotationGesture;
 }
 
 

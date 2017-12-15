@@ -56,6 +56,7 @@
     [userResizableView2 setButton:ZDStickerViewButtonCustom
                             image:[UIImage imageNamed:@"Write.png"]];
     userResizableView2.preventsResizing = YES;
+    userResizableView2.allowPinchToZoom = NO;
     [userResizableView2 showEditingHandles];
     [self.view addSubview:userResizableView2];
     
@@ -77,6 +78,7 @@
     [userResizableView setButton:ZDStickerViewButtonCustom
                            image:[UIImage imageNamed:@"Write.png"]];
     userResizableView.preventsResizing = NO;
+    userResizableView.allowRotationGesture = NO;
     [userResizableView showEditingHandles];
     [userResizableView2 addSubview:userResizableView];
 }
