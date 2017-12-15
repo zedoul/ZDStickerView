@@ -94,8 +94,26 @@
 
 
 - (void)pinchTranslate:(UIPinchGestureRecognizer *)recognizer {
-    recognizer.view.transform = CGAffineTransformScale(recognizer.view.transform, recognizer.scale, recognizer.scale);
-    recognizer.scale = 1;
+    static CGRect boundsBeforeScaling;
+    static CGAffineTransform transformBeforeScaling;
+    
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        boundsBeforeScaling = recognizer.view.bounds;
+        transformBeforeScaling = recognizer.view.transform;
+    }
+    
+    CGPoint center = recognizer.view.center;
+    CGAffineTransform scale = CGAffineTransformScale(CGAffineTransformIdentity,
+                                                     recognizer.scale,
+                                                     recognizer.scale);
+    CGRect frame = CGRectApplyAffineTransform(boundsBeforeScaling, scale);
+    
+    frame.origin = CGPointMake(center.x - frame.size.width / 2,
+                               center.y - frame.size.height / 2);
+
+    recognizer.view.transform = CGAffineTransformIdentity;
+    recognizer.view.frame = frame;
+    recognizer.view.transform = transformBeforeScaling;
 }
 
 - (void)rotateTranslate:(UIRotationGestureRecognizer *)recognizer {
