@@ -25,6 +25,9 @@
 @property (strong, nonatomic) UIImageView *deleteControl;
 @property (strong, nonatomic) UIImageView *customControl;
 
+@property (strong, nonatomic) UIPinchGestureRecognizer *pinchRecognizer;
+@property (strong, nonatomic) UIRotationGestureRecognizer *rotationRecognizer;
+
 @property (nonatomic) BOOL preventsLayoutWhileResizing;
 
 @property (nonatomic) CGFloat deltaAngle;
@@ -91,8 +94,26 @@
 
 
 - (void)pinchTranslate:(UIPinchGestureRecognizer *)recognizer {
-    recognizer.view.transform = CGAffineTransformScale(recognizer.view.transform, recognizer.scale, recognizer.scale);
-    recognizer.scale = 1;
+    static CGRect boundsBeforeScaling;
+    static CGAffineTransform transformBeforeScaling;
+    
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        boundsBeforeScaling = recognizer.view.bounds;
+        transformBeforeScaling = recognizer.view.transform;
+    }
+    
+    CGPoint center = recognizer.view.center;
+    CGAffineTransform scale = CGAffineTransformScale(CGAffineTransformIdentity,
+                                                     recognizer.scale,
+                                                     recognizer.scale);
+    CGRect frame = CGRectApplyAffineTransform(boundsBeforeScaling, scale);
+    
+    frame.origin = CGPointMake(center.x - frame.size.width / 2,
+                               center.y - frame.size.height / 2);
+
+    recognizer.view.transform = CGAffineTransformIdentity;
+    recognizer.view.frame = frame;
+    recognizer.view.transform = transformBeforeScaling;
 }
 
 - (void)rotateTranslate:(UIRotationGestureRecognizer *)recognizer {
@@ -107,6 +128,11 @@
         [self enableTransluceny:YES];
         self.prevPoint = [recognizer locationInView:self];
         [self setNeedsDisplay];
+        
+        // Inform delegate.
+        if ([self.stickerViewDelegate respondsToSelector:@selector(stickerViewDidBeginEditing:)]) {
+            [self.stickerViewDelegate stickerViewDidBeginEditing:self];
+        }
     }
     else if ([recognizer state] == UIGestureRecognizerStateChanged)
     {
@@ -185,6 +211,18 @@
         [self enableTransluceny:NO];
         self.prevPoint = [recognizer locationInView:self];
         [self setNeedsDisplay];
+        
+        // Inform delegate.
+        if ([self.stickerViewDelegate respondsToSelector:@selector(stickerViewDidEndEditing:)]) {
+            [self.stickerViewDelegate stickerViewDidEndEditing:self];
+        }
+    }
+    else if ([recognizer state] == UIGestureRecognizerStateCancelled)
+    {
+        // Inform delegate.
+        if ([self.stickerViewDelegate respondsToSelector:@selector(stickerViewDidCancelEditing:)]) {
+            [self.stickerViewDelegate stickerViewDidCancelEditing:self];
+        }
     }
 }
 
@@ -215,8 +253,6 @@
     self.preventsDeleting = NO;
     self.preventsCustomButton = YES;
     self.translucencySticker = YES;
-    self.allowPinchToZoom = YES;
-    self.allowRotationGesture = YES;
     self.allowDragging = YES;
 
 #ifdef ZDSTICKERVIEW_LONGPRESS
@@ -256,23 +292,22 @@
     self.customControl.userInteractionEnabled = YES;
     self.customControl.image = nil;
     
-    if (self.allowPinchToZoom) {
-        UIPinchGestureRecognizer *pinchGesture = [[UIPinchGestureRecognizer alloc]
-                                                  initWithTarget:self
-                                                  action:@selector(pinchTranslate:)];
-        [self addGestureRecognizer:pinchGesture];
-    }
+    // Add pinch gesture recognizer.
+    self.pinchRecognizer = [[UIPinchGestureRecognizer alloc]
+                            initWithTarget:self
+                            action:@selector(pinchTranslate:)];
+    [self addGestureRecognizer:self.pinchRecognizer];
     
-    if (self.allowRotationGesture) {
-        UIRotationGestureRecognizer *rotationGesture = [[UIRotationGestureRecognizer alloc]
-                                                        initWithTarget:self
-                                                        action:@selector(rotateTranslate:)];
-        [self addGestureRecognizer:rotationGesture];
-    }
+    // Add rotation recognizer.
+    self.rotationRecognizer = [[UIRotationGestureRecognizer alloc]
+                               initWithTarget:self
+                               action:@selector(rotateTranslate:)];
+    [self addGestureRecognizer:self.rotationRecognizer];
     
+    // Add custom control recognizer.
     UITapGestureRecognizer *customTapGesture = [[UITapGestureRecognizer alloc]
                                                 initWithTarget:self
-                                                        action:@selector(customTap:)];
+                                                action:@selector(customTap:)];
     [self.customControl addGestureRecognizer:customTapGesture];
     [self addSubview:self.customControl];
 
@@ -477,7 +512,7 @@
     self.touchStart = touch;
 }
 
-
+#pragma mark - Property setter and getter
 
 - (void)hideDelHandle
 {
@@ -608,6 +643,22 @@
 
 - (void)setBorderWidth:(CGFloat)borderWidth {
     self.borderView.borderWidth = borderWidth;
+}
+
+- (BOOL)allowPinchToZoom {
+    return self.pinchRecognizer.isEnabled;
+}
+
+- (void)setAllowPinchToZoom:(BOOL)allowPinchToZoom {
+    self.pinchRecognizer.enabled = allowPinchToZoom;
+}
+
+- (BOOL)allowRotationGesture {
+    return self.rotationRecognizer.isEnabled;
+}
+
+-(void)setAllowRotationGesture:(BOOL)allowRotationGesture {
+    self.rotationRecognizer.enabled = allowRotationGesture;
 }
 
 
