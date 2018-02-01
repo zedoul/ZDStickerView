@@ -8,15 +8,15 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ZDStickerView'
-  s.version          = '0.1.18.2'
+  s.version          = '0.1.18.3'
   s.summary          = 'ZDStickerView is ObjC module for iOS and offers complete configurability, including movement, resizing, rotation and more, with one finger.'
   s.description      = 'ZDStickerView is ObjC module for iOS and offers complete configurability, including movement, resizing, rotation and more, with one finger.'
 
-  s.homepage         = 'https://bitbucket.org/actions-micro/amzdstickerview'
+  s.homepage         = 'https://github.com/Splendent/ZDStickerView'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Nicejinux' => 'nicejinux@gmail.com' }
-  s.source           = { :git => 'git@bitbucket.org:actions-micro/amzdstickerview.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/Splendent/ZDStickerView.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/nicejinux'
 
   s.ios.deployment_target = '8.0'
