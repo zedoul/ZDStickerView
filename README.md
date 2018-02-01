@@ -1,3 +1,7 @@
+
+This is modded version, add longpress, singletap and block usage, also nullibility
+===========
+
 # ZDStickerView 
 
 ZDStickerView is an Objective-C module for iOS and offers complete configurability, including movement, resizing, rotation and more, with one finger.
